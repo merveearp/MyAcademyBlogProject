@@ -39,6 +39,12 @@ namespace Blogy.Business.Services.BlogServices
             return _mapper.Map<List<ResultBlogDto>>(entities);
         }
 
+        public async Task<List<ResultBlogDto>> GetBlogsByCategoryIdAsync(int categoryId)
+        {
+            var entities = await _blogRepository.GetBlogsByCategoryIdAsync(categoryId);
+            return _mapper.Map<List<ResultBlogDto>>(entities);
+        }
+
         public async Task<List<ResultBlogDto>> GetBlogsWithCategoriesAsync()
         {
             var values = await _blogRepository.GetBlogsWithCategoriesAsync();
@@ -47,8 +53,14 @@ namespace Blogy.Business.Services.BlogServices
 
         public async Task<UpdateBlogDto> GetByIdAsync(int id)
         {
-            var entity = await _blogRepository.GetByIdAsync(id);
-            return _mapper.Map<UpdateBlogDto>(entity);
+            var entities = await _blogRepository.GetByIdAsync(id);
+            return _mapper.Map<UpdateBlogDto>(entities);
+        }
+
+        public async Task<List<ResultBlogDto>> GetLast3BlogsAsync()
+        {
+           var entities = await _blogRepository.GetLast3BlogsAsync();
+            return _mapper.Map<List<ResultBlogDto>>(entities);
         }
 
         public async Task UpdateAsync(UpdateBlogDto updateDto)

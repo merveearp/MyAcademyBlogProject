@@ -20,5 +20,10 @@ namespace Blogy.Entity.Entities
         public Category Category { get; set; }
 
         public IList<BlogTag> BlogTags { get; set; }
+
+        public int WriterId { get; set; }
+        public AppUser Writer { get; set; }
+        public IList<Comment> Comments { get; set; }
+
     }
 }

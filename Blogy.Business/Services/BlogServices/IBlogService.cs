@@ -11,5 +11,8 @@ namespace Blogy.Business.Services.BlogServices
     public interface IBlogService :IGenericService<ResultBlogDto,UpdateBlogDto,CreateBlogDto>
     {
         Task<List<ResultBlogDto>> GetBlogsWithCategoriesAsync();
+        Task<List<ResultBlogDto>> GetBlogsByCategoryIdAsync(int categoryId);
+        Task<List<ResultBlogDto>> GetLast3BlogsAsync();
+      
     }
 }
