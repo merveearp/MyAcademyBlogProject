@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogy.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251028114431_New_Mig1")]
-    partial class New_Mig1
+    [Migration("20251028184728_Initial_Mig_Relations")]
+    partial class Initial_Mig_Relations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

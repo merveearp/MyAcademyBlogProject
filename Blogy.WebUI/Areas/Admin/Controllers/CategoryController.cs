@@ -1,10 +1,13 @@
 ﻿using Blogy.Business.DTOS.CategoryDtos;
 using Blogy.Business.Services.CategoryServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
+
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
