@@ -13,7 +13,7 @@ namespace Blogy.Business.Validators.CategoryValidators
         public CreateCategoryValidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Kategori Adı Boş Bırakılamaz !!")
-                                .MinimumLength(3).WithMessage("Kategori Adı en az 3 karakter olamlıdır !!")
+                                .MinimumLength(3).WithMessage("Kategori Adı en az 3 karakter olmalıdır !!")
                                 .MaximumLength(50).WithMessage("Kategori adı en fazla 50 karakter olmalıdır!!");                                    
         }
     }
