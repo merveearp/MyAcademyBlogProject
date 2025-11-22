@@ -10,7 +10,8 @@ using Microsoft.Build.Framework;
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles =Roles.Admin)]
+    [Authorize(Roles =$"{Roles.Admin}")]
+
     public class BlogController : Controller
     {
         private readonly IBlogService _blogService;
