@@ -2,6 +2,7 @@
 using Blogy.DataAccess.Repositories.BlogRepositories;
 using Blogy.DataAccess.Repositories.BlogTagRepositories;
 using Blogy.DataAccess.Repositories.CategoryRepositories;
+using Blogy.DataAccess.Repositories.CommentRepositories;
 using Blogy.DataAccess.Repositories.SocialRepositories;
 using Blogy.DataAccess.Repositories.TagRepositories;
 using Blogy.Entity.Entities;
@@ -20,6 +21,7 @@ namespace Blogy.DataAccess.Extensions
             Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
             Services.AddScoped<ISocialRepository, SocialRepository>();
             Services.AddScoped<ITagRepository, TagRepository>();
+            Services.AddScoped<ICommentRepository, CommentRepository>();
            
             Services.AddDbContext<AppDbContext>(options =>
             {

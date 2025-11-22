@@ -1,0 +1,25 @@
+﻿@model ChangePasswordDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<h1>Şifre Değiştirme Sayfası</h1>
+
+<form method="post">
+    <label>Mevcut Şifreniz</label>
+    <input type="text" class="form-control" asp-for="CurrentPassword" required />
+
+    <label>Yeni Şifreniz</label>
+    <input type="text" class="form-control" asp-for="CurrentPassword" required />
+
+    <label>Yeni Şifreniz Tekrar Girin </label>
+    <input type="text" class="form-control" asp-for="CurrentPassword" required />
+
+<span class="text-danger">@Html.ValidationSummary()</span>
+
+<button class="btn btn-outline-dark">Şifreyi Değiştir</button>
+
+</form>
+
+

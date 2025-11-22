@@ -13,7 +13,7 @@ namespace Blogy.Entity.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? Title { get; set; }
-        public string? ProfileImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         public IList<Blog> Blogs { get; set; }
         public IList<Comment> Comments { get; set; }
 
