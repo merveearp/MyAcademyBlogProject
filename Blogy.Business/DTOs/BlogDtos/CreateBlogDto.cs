@@ -14,6 +14,7 @@ namespace Blogy.Business.DTOs.BlogDtos
         public string? BlogImage1 { get; set; }
         public string? BlogImage2 { get; set; }
         public int CategoryId { get; set; }
+        public int WriterId { get; set; }
         
     }
 }

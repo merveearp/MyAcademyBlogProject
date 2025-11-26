@@ -1,8 +1,10 @@
 ﻿using Blogy.Business.DTOs.BlogDtos;
 using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.CategoryServices;
+using Blogy.Entity.Entities;
 using Blogy.WebUI.Consts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
@@ -12,16 +14,10 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     [Authorize(Roles =$"{Roles.Admin}")]
 
-    public class BlogController : Controller
-    {
-        private readonly IBlogService _blogService;
-        private readonly ICategoryService _categoryService;
-
-        public BlogController(IBlogService blogService, ICategoryService categoryService)
-        {
-            _blogService = blogService;
-            _categoryService = categoryService;
-        }
+    public class BlogController(ICategoryService _categoryService,
+                                IBlogService _blogService,
+                                UserManager<AppUser> _userManager) : Controller
+    {  
         private async Task GetCategoriesAsync()
         {
             var categories = await _categoryService.GetAllAsync();
@@ -35,7 +31,7 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var blogs = await _blogService.GetBlogsWithCategoriesAsync();
+            var blogs = await _blogService.GetAllAsync();
             return View(blogs);
         }
 
@@ -54,7 +50,8 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
                 await GetCategoriesAsync();
                 return View(createBlogDto);
             }
-
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            createBlogDto.WriterId = user.Id;
             await _blogService.CreateAsync(createBlogDto);
             return RedirectToAction(nameof(Index));
         }

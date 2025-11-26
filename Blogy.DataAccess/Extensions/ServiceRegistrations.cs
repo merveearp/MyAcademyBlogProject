@@ -26,6 +26,7 @@ namespace Blogy.DataAccess.Extensions
             Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseLazyLoadingProxies();
             });
 
             Services.AddIdentity<AppUser, AppRole>(options =>

@@ -43,6 +43,7 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateComment(CreateCommentDto createCommentDto)
         {
+            await GetBlogs();
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             createCommentDto.UserId = user.Id;
             await _commentService.CreateAsync(createCommentDto);
