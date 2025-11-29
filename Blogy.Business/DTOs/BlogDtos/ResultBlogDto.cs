@@ -1,4 +1,6 @@
-﻿using Blogy.Business.DTOS.CategoryDtos;
+﻿using Blogy.Business.DTOs.CommentDtos;
+using Blogy.Business.DTOs.UserDtos;
+using Blogy.Business.DTOS.CategoryDtos;
 using Blogy.Business.DTOS.Common;
 using Blogy.Entity.Entities;
 using System;
@@ -21,6 +23,10 @@ namespace Blogy.Business.DTOs.BlogDtos
 
         public ResultCategoryDto Category { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-
+        public IList<BlogTag> BlogTags { get; set; }//bunudeğiştir
+        public ResultUserDto? Writer { get; set; }
+        public IList<ResultCommentDto> Comments { get; set; }
     }
+
 }
+

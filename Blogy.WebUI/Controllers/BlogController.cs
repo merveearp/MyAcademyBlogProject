@@ -1,19 +1,28 @@
-﻿using Blogy.Business.Services.BlogServices;
+﻿using AutoMapper;
+using Blogy.Business.DTOs.BlogDtos;
+using Blogy.Business.Services.BlogServices;
 using Microsoft.AspNetCore.Mvc;
+using PagedList.Core;
 
 namespace Blogy.WebUI.Controllers
 {
     public class BlogController : Controller
     {
         private readonly IBlogService _blogService;
+        private readonly IMapper _mapper;
 
-        public BlogController(IBlogService blogService)
+        public BlogController(IBlogService blogService, IMapper mapper)
         {
             _blogService = blogService;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page=1,int pageSize=2)
         {
-            return View();
+            var blogs = await _blogService.GetAllAsync();
+
+            var values = new PagedList<ResultBlogDto>(blogs.AsQueryable(), page, pageSize);
+
+            return View(values);
         }
         public async Task<IActionResult> GetBlogsByCategory(int categoryId)
         {
@@ -21,6 +30,12 @@ namespace Blogy.WebUI.Controllers
             var blogs = await _blogService.GetBlogsByCategoryIdAsync(categoryId);
            
             return View(blogs);
+        }
+
+        public async Task<IActionResult> BlogDetails(int id)
+        {
+            var blog = await _blogService.GetSingleByIdAsync(id);       
+            return View(blog);
         }
     }
 }

@@ -39,10 +39,21 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+// Admin Area için route
+
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+);
+
+// Writer Area için route
+app.MapAreaControllerRoute(
+    name: "Writer",
+    areaName: "Writer",
+    pattern: "Writer/{controller=Home}/{action=Index}/{id?}"
+);
+
 
 app.MapControllerRoute(
     name: "default",

@@ -13,8 +13,6 @@ namespace Blogy.WebUI.Filters
                 return;
             }
 
-
-
             foreach (var error in validationException.Errors)
             {
                 context.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);

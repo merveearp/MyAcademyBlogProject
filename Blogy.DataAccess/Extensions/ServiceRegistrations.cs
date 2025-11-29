@@ -9,6 +9,8 @@ using Blogy.Entity.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Scrutor;
+using System.Reflection;
 
 namespace Blogy.DataAccess.Extensions
 {
@@ -16,11 +18,17 @@ namespace Blogy.DataAccess.Extensions
     {
         public static void AddRepositoriesExt(this IServiceCollection Services,IConfiguration Configuration)
         {
-            Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            Services.AddScoped<IBlogRepository, BlogRepository>();
-            Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
-            Services.AddScoped<ISocialRepository, SocialRepository>();
-            Services.AddScoped<ITagRepository, TagRepository>();
+
+            Services.Scan(opt =>
+            {
+                opt.FromAssemblies(Assembly.GetExecutingAssembly())
+                    .AddClasses(publicOnly: false)
+                    .UsingRegistrationStrategy(registrationStrategy: RegistrationStrategy.Skip)
+                    .AsMatchingInterface()
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime();
+            });
+           
             Services.AddScoped<ICommentRepository, CommentRepository>();
            
             Services.AddDbContext<AppDbContext>(options =>
