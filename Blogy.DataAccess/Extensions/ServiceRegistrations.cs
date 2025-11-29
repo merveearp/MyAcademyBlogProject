@@ -16,10 +16,10 @@ namespace Blogy.DataAccess.Extensions
 {
     public static class ServiceRegistrations
     {
-        public static void AddRepositoriesExt(this IServiceCollection Services,IConfiguration Configuration)
+        public static void AddRepositoriesExt(this IServiceCollection services,IConfiguration Configuration)
         {
 
-            Services.Scan(opt =>
+            services.Scan(opt =>
             {
                 opt.FromAssemblies(Assembly.GetExecutingAssembly())
                     .AddClasses(publicOnly: false)
@@ -29,15 +29,15 @@ namespace Blogy.DataAccess.Extensions
                     .WithScopedLifetime();
             });
            
-            Services.AddScoped<ICommentRepository, CommentRepository>();
+            
            
-            Services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 options.UseLazyLoadingProxies();
             });
 
-            Services.AddIdentity<AppUser, AppRole>(options =>
+            services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
             })
