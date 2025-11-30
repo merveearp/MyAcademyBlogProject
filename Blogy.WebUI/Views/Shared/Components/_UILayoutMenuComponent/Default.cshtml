@@ -1,0 +1,46 @@
+﻿@model List<ResultCategoryDto>
+@*
+    _UILayoutMenuComponent
+*@
+
+<div class="menu-bg-wrap">
+	<div class="site-navigation">
+		<div class="row g-0 align-items-center">
+			<div class="col-2">
+				<a href="index.html" class="logo m-0 float-start">Blogy<span class="text-primary">.</span></a>
+			</div>
+			<div class="col-8 text-center">
+				<form action="#" class="search-form d-inline-block d-lg-none">
+					<input type="text" class="form-control" placeholder="Ara...">
+					<span class="bi-search"></span>
+				</form>
+
+				<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+					<li class="active"><a href="/Default/Index">Anasayfa</a></li>
+					<li class="has-children">
+						<a asp-area="" asp-controller="Category" asp-action="Index">Kategoriler</a>
+						<ul class="dropdown">
+							@foreach(var item in Model)
+							{
+								<li><a asp-area="" asp-controller="Blog" asp-action="GetBlogsByCategory" asp-route-categoryId="@item.Id">@item.CategoryName</a></li>
+							}
+									
+						</ul>
+					</li>
+					<li class="active"><a asp-area="" asp-controller="Blog" asp-action="Index">Bloglar</a></li>
+					
+					<li><a href="#">Hakkımızda</a></li>
+				</ul>
+
+				<li><a asp-area="" asp-controller="Login" asp-action="Index" >Giriş Yap</a></li>
+			
+			</ul>
+			</div>
+			<div class="col-2 text-end">
+				<a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
+					<span></span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

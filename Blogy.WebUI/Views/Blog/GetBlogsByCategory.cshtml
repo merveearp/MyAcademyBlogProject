@@ -6,13 +6,17 @@
 
 <div class="section search-result-wrap">
 	<div class="container">
-		<div class="row">
+		<div class="row mb-4">
 			<div class="col-12">
-				Kategori: @(Model.FirstOrDefault() != null
-							? Model.FirstOrDefault().Category?.CategoryName
-							: "Bu kategoriye ait blog bulunamadı")
+				<h2 class="h3 fw-bold">
+					Kategori:
+					<span class="text-primary">
+						@(Model.FirstOrDefault() != null
+												? Model.FirstOrDefault().Category?.CategoryName
+												: "Bu kategoriye ait blog bulunamadı")
+					</span>
+				</h2>
 			</div>
-
 		</div>
 		<div class="row posts-entry">
 			<div class="col-lg-8">
@@ -23,8 +27,7 @@
 							<img src="@item.CoverImage" alt="Image" class="img-fluid">
 						</a>
 						<div>
-							<span class="date">@item.CreatedDate &bullet; <a href="#"> @item.Category.CategoryName</a></span>
-							<h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
+							<span class="date">@item.CreatedDate &bullet; <a href="#"> @item.Category.CategoryName</a></span>							
 							<p>@(item.Description.Length < 100 ? item.Description : item.Description.Substring(0,100) +"...")</p>
 							<p><a href="#" class="btn btn-sm btn-outline-primary">Devamını Oku</a></p>
 						</div>
@@ -55,39 +58,42 @@
 						<input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
 					</form>
 				</div>
+				
 				<!-- END sidebar-box -->
-@await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent");
+				@await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent")
+@* 
+				<!-- END sidebar-box -->
+				<div class="sidebar-box">
+				<h3 class="heading">Kategoriler</h3>
+				<ul class="categories">
+					@foreach (var category in Model)
+					{
+						<li>
+							<a asp-controller="Blog"
+							   asp-action="GetBlogsByCategory"
+							   asp-route-categoryId="@category.Id">
+								@category.CategoryName <span>@category.Blogs.Count()</span>
+							</a>
+						</li>
+					}
+				</ul>
+			</div>
+
+
 				<!-- END sidebar-box -->
 
 				<div class="sidebar-box">
-					<h3 class="heading">Categories</h3>
-					<ul class="categories">
-						<li><a href="#">Food <span>(12)</span></a></li>
-						<li><a href="#">Travel <span>(22)</span></a></li>
-						<li><a href="#">Lifestyle <span>(37)</span></a></li>
-						<li><a href="#">Business <span>(42)</span></a></li>
-						<li><a href="#">Adventure <span>(14)</span></a></li>
-					</ul>
-				</div>
-				<!-- END sidebar-box -->
-
-				<div class="sidebar-box">
-					<h3 class="heading">Tags</h3>
+					<h3 class="heading">Etiketler</h3>
 					<ul class="tags">
-						<li><a href="#">Travel</a></li>
-						<li><a href="#">Adventure</a></li>
-						<li><a href="#">Food</a></li>
-						<li><a href="#">Lifestyle</a></li>
-						<li><a href="#">Business</a></li>
-						<li><a href="#">Freelancing</a></li>
-						<li><a href="#">Travel</a></li>
-						<li><a href="#">Adventure</a></li>
-						<li><a href="#">Food</a></li>
-						<li><a href="#">Lifestyle</a></li>
-						<li><a href="#">Business</a></li>
-						<li><a href="#">Freelancing</a></li>
+						@foreach (var tag in Model.BlogTags)
+						{
+							<li><a href="#">@tag.Tag.Name</a></li>
+
+						}
+
 					</ul>
 				</div>
+ *@
 
 			</div>
 		</div>

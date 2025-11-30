@@ -2,6 +2,17 @@
 @*
     _DefaultBlogsComponent
 *@
+
+<style>
+	.blog-img-hover img {
+		transition: transform 0.35s ease, filter 0.35s ease;
+	}
+
+	.blog-img-hover:hover img {
+		transform: scale(1.05);
+		filter: brightness(85%); 
+	}
+</style>
 @foreach(var category in Model)
 {
 	<section class="section">
@@ -24,17 +35,19 @@
 				{
 					<div class="col-lg-4 mb-4">
 						<div class="post-entry-alt">
-							<a href="single.html" class="img-link"><img src="@blog.CoverImage" alt="Image" class="img-fluid"></a>
+							<a href="/Blog/BlogDetails/@blog.Id" class="img-link me-4 blog-img-hover">
+								<img src="@blog.CoverImage" alt="Image" class="img-fluid">
+							</a>
 							<div class="excerpt">
-									<h2><a href="single.html">@blog.Title</a></h2>
+									<h2>@blog.Title</h2>
 									<div class="post-meta align-items-center text-left clearfix">
-									<figure class="author-figure mb-0 me-3 float-start"><img src="~/UI/images/person_1.jpg" alt="Image" class="img-fluid"></figure>
-									<span class="d-inline-block mt-1">By <a href="#">David Anderson</a></span>
+									<figure class="author-figure mb-0 me-3 float-start"><img src="@blog.Writer.ImageUrl" alt="Image" class="img-fluid"></figure>
+									<span class="d-inline-block mt-1">By @blog.Writer.FullName</span>
 									<span>@blog.CreatedDate.ToShortDateString()</span>
 								</div>
 
 								<p>@(blog.Description.Length < 100 ? blog.Description :  blog.Description.Substring(0,100) +"...")</p>
-								<p><a href="#" class="read-more">Devamını Oku</a></p>
+								<p><a asp-area="" asp-controller="Blog" asp-action="BlogDetails" asp-route-id="@blog.Id" class="read-more">Devamını Oku</a></p>
 							</div>
 						</div>
 					</div>

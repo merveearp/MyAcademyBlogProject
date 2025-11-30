@@ -12,7 +12,7 @@
 <table class="table table-bordered table-hover">
     <tr>
         <th>#</th>
-        <th>Blog Id</th>
+        <th>Blog</th>
         <th>Yorum İçeriği</th>
         <th>İşlemler</th>
     </tr>
@@ -22,7 +22,7 @@
         count++;
         <tr>
             <th>@count</th>
-            <th>@item.BlogId</th>
+            <th>@item.Blog.Title</th>
             <th>@item.Content</th>          
            
             <td>
@@ -35,4 +35,5 @@
     }
 
 </table>
-<a href="/Admin/Blog/CreateBlog" class="btn btn-success">Yeni Yorum Oluştur</a>
+<a href="/Admin/Comment/CreateComment" class="btn btn-success">Yeni Yorum Oluştur</a>
+

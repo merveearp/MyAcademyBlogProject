@@ -1,62 +1,47 @@
-﻿@using PagedList.Core
-@using PagedList.Core.Mvc
-@model PagedList<ResultBlogDto>
+﻿@model List<ResultCategoryDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/Index.cshtml";
-
-    var customOptions = PagedListRenderOptions.Bootstrap4PageNumbersPlusPrevAndNext;
-    customOptions.LinkToPreviousPageFormat = "<<";
-    customOptions.LinkToNextPageFormat = ">> ";
 }
+
 <style>
-
-    blog-img-hover img {
-        transition: transform 0.35s ease, filter 0.35s ease;
-    }
-
-    .blog-img-hover:hover img {
-        transform: scale(1.05);
-        filter: brightness(85%);
+    .category-dot {
+        width: 14px;
+        height: 14px;
+        background-color: #355c7d; 
+        border-radius: 50%;
+        margin-right: 15px;
     }
 </style>
 
-<div class="hero overlay inner-page bg-primary py-5">
-    <div class="container">
-        <div class="row align-items-center justify-content-center text-center pt-5">
-            <div class="col-lg-6">
-                <h1 class="heading text-white mb-3" data-aos="fade-up">Bloglar</h1>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="section search-result-wrap">
     <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="h3 fw-bold">Kategoriler</h2>
+            </div>
+        </div>
 
         <div class="row posts-entry">
+           
             <div class="col-lg-8">
-                @foreach (var item in Model)
+                @foreach (var category in Model)
                 {
-                    <div class="blog-entry d-flex blog-entry-search-item">
-                        <a href="/Blog/BlogDetails/@item.Id" class="img-link me-4 blog-img-hover">
-                            <img src="@item.CoverImage" alt="Image" class="img-fluid">
-                        </a>
+                    <div class="blog-entry d-flex blog-entry-search-item align-items-center mb-3">
+                        <div class="category-dot"></div>
+
                         <div>
-                            <span class="date">@item.CreatedDate &bullet; @item.Category.CategoryName</span>
-                            <h2>@item.Title</h2>
-                            <p>@(item.Description.Length >100 ? item.Description.Substring(0,100) +"..." : item.Description)</p>
-                            <p><a href="/Blog/BlogDetails/@item.Id" class="btn btn-sm btn-outline-primary">Devamını Oku</a></p>
+                            <span class="date">@category.CreatedDate.ToShortDateString()</span>
+                            <h2>
+                                <a asp-controller="Blog"
+                                   asp-action="GetBlogsByCategory"
+                                   asp-route-categoryId="@category.Id">
+                                    @category.CategoryName
+                                </a>
+                            </h2>
                         </div>
                     </div>
                 }
-
-                <div class="row text-start pt-5 border-top">
-                    <div class="col-md-12">
-                        <pager asp-action="Index" asp-controller="Blog" list="@Model" options="@customOptions"></pager>
-                    </div>
-                </div>
-
             </div>
 
             <div class="col-lg-4 sidebar">
@@ -67,12 +52,12 @@
                         <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
                     </form>
                 </div>
-                <!-- END sidebar-box -->
+
                 <!-- END sidebar-box -->
                 @await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent")
 
                 <!-- END sidebar-box -->
-               @*  <div class="sidebar-box">
+                <div class="sidebar-box">
                     <h3 class="heading">Kategoriler</h3>
                     <ul class="categories">
                         @foreach (var category in Model)
@@ -89,19 +74,15 @@
                 </div>
 
                 <!-- END sidebar-box -->
-
-                <div class="sidebar-box">
+                @* <div class="sidebar-box">
                     <h3 class="heading">Etiketler</h3>
                     <ul class="tags">
                         @foreach (var tag in Model.BlogTags)
                         {
                             <li><a href="#">@tag.Tag.Name</a></li>
-
                         }
-
                     </ul>
                 </div> *@
-
             </div>
         </div>
     </div>

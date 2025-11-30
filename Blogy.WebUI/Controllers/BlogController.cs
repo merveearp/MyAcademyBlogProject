@@ -16,7 +16,7 @@ namespace Blogy.WebUI.Controllers
             _blogService = blogService;
             _mapper = mapper;
         }
-        public async Task<IActionResult> Index(int page=1,int pageSize=2)
+        public async Task<IActionResult> Index(int page=1,int pageSize=4)
         {
             var blogs = await _blogService.GetAllAsync();
 

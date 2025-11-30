@@ -1,0 +1,16 @@
+﻿@model ResultBlogDto
+@*
+    _DefaultCategoryBlogComponent
+*@
+
+<div class="sidebar-box">
+    <h3 class="heading">Etiketler</h3>
+    <ul class="tags">
+        @foreach (var tag in Model.BlogTags)
+        {
+            <li><a href="#">@tag.Tag.Name</a></li>
+
+        }
+
+    </ul>
+</div>

@@ -12,5 +12,6 @@ namespace Blogy.Business.DTOS.CategoryDtos
     { 
         public string CategoryName { get; set; }
         public IList<ResultBlogDto> Blogs { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
