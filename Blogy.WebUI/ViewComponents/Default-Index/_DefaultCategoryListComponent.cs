@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blogy.WebUI.ViewComponents.Default_Index
 {
-    public class _CategoryListComponent : ViewComponent
+    public class _DefaultCategoryListComponent : ViewComponent
     {
         private readonly ICategoryService _categoryService;
 
-        public _CategoryListComponent(ICategoryService categoryService)
+        public _DefaultCategoryListComponent(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }

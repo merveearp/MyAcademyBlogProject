@@ -6,9 +6,16 @@ namespace Blogy.WebUI.ViewComponents.UILayout
     public class _UILayoutRecentBlogsComponent :ViewComponent
     {
         private readonly IBlogService _blogService;
+
+        public _UILayoutRecentBlogsComponent(IBlogService blogService)
+        {
+            _blogService = blogService;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            var values = await _blogService.GetLast3BlogsAsync();
+            return View(values);
         }
     }
 }

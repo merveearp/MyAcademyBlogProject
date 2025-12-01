@@ -29,8 +29,17 @@
 						<div>
 							<span class="date">@item.CreatedDate &bullet; <a href="#"> @item.Category.CategoryName</a></span>							
 							<p>@(item.Description.Length < 100 ? item.Description : item.Description.Substring(0,100) +"...")</p>
-							<p><a href="#" class="btn btn-sm btn-outline-primary">Devamını Oku</a></p>
+							<p><a asp-area="" asp-controller="Blog" asp-action="BlogDetails" asp-route-id ="@item.Id" class="btn btn-sm btn-outline-primary">Devamını Oku</a></p>
 						</div>
+						@if (item.BlogTags != null)
+						{
+							@foreach (var t in item.BlogTags)
+							{
+								<a href="#" class="badge bg-light text-dark me-1">
+									@t.Tag.Name
+								</a>
+							}
+						}
 
 					</div>
 				}								
@@ -61,39 +70,12 @@
 				
 				<!-- END sidebar-box -->
 				@await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent")
-@* 
-				<!-- END sidebar-box -->
-				<div class="sidebar-box">
-				<h3 class="heading">Kategoriler</h3>
-				<ul class="categories">
-					@foreach (var category in Model)
-					{
-						<li>
-							<a asp-controller="Blog"
-							   asp-action="GetBlogsByCategory"
-							   asp-route-categoryId="@category.Id">
-								@category.CategoryName <span>@category.Blogs.Count()</span>
-							</a>
-						</li>
-					}
-				</ul>
-			</div>
-
 
 				<!-- END sidebar-box -->
 
-				<div class="sidebar-box">
-					<h3 class="heading">Etiketler</h3>
-					<ul class="tags">
-						@foreach (var tag in Model.BlogTags)
-						{
-							<li><a href="#">@tag.Tag.Name</a></li>
+				@await Component.InvokeAsync("_DefaultCategoryListComponent")
 
-						}
-
-					</ul>
-				</div>
- *@
+				
 
 			</div>
 		</div>
