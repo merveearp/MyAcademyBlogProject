@@ -1,28 +1,416 @@
 ﻿@model UpdateCategoryDto
 @{
-    ViewData["Title"] = "UpdateCategory";
+    ViewData["Title"] = "Kategori Güncelle";
     Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
 
 }
 
-<div class="pd-20 card-box mb-30">
-    <div class="clearfix mb-20">
-        <div class="pull-left">
-            <h2 class="text-blue h2">Kategori Güncelle</h2>
-            <small class="text-muted">Mevcut kategori adını güncelleyebilirsiniz.</small>
+<div class="container-fluid">
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-1">Kategori Güncelle</h2>
+                    <p class="text-muted">Mevcut kategori bilgilerini düzenleyin</p>
+                </div>
+                <a href="/Admin/Category/Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
         </div>
     </div>
 
-    <form method="post">
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            <label class="form-label">Kategori Adı</label>
-            <input asp-for="Name" class="form-control" placeholder="Kategori adını girin" />
-            <span class="text-danger" asp-validation-for="Name"></span>
-        </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6">
+            <div class="card shadow-sm">
+                <div class="card-header cat-header-warning py-3">
+                    <h5 class="mb-0 text-white"><i class="fas fa-edit me-2"></i>Kategori Bilgileri Düzenleme</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-        <button type="submit" class="btn btn-info mt-3">Güncelle</button>
-        <a href="/Admin/Category/Index" class="btn btn-secondary mt-3 ml-2">Geri Dön</a>
-    </form>
+                        
+                        <div class="alert alert-info cat-info-alert mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Kategori ID:</strong> @Model.Id
+                        </div>
+
+                       
+                        <div class="mb-4">
+                            <label asp-for="Name" class="form-label">
+                                <i class="fas fa-tag text-primary me-2"></i>Kategori Adı
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Name"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="Örn: Teknoloji, Seyahat, Yemek..."
+                                   autofocus />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Kategori adı benzersiz olmalıdır
+                            </small>
+                        </div>
+
+                        
+                        @if (!string.IsNullOrEmpty(Model.CategoryImage))
+                        {
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-image text-success me-2"></i>Mevcut Görsel
+                                </label>
+                                <div class="current-image-wrapper">
+                                    <img src="@Model.CategoryImage" alt="@Model.Name" class="img-fluid" id="currentImage" />
+                                    <div class="current-image-overlay">
+                                        <span class="current-image-label">Mevcut Görsel</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        
+                        <div class="mb-4">
+                            <label asp-for="CategoryImage" class="form-label">
+                                <i class="fas fa-upload text-info me-2"></i>Yeni Görsel Yükle
+                                @if (!string.IsNullOrEmpty(Model.CategoryImage))
+                                {
+                                    <span class="text-muted small">(Opsiyonel)</span>
+                                }
+                            </label>
+                            <input asp-for="CategoryImage"
+                                   type="file"
+                                   class="form-control"
+                                   accept="image/*"
+                                   id="categoryImageInput" />
+                            <span asp-validation-for="CategoryImage" class="text-danger small"></span>
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                @if (!string.IsNullOrEmpty(Model.CategoryImage))
+                                {
+                                    <text>Yeni görsel seçerseniz mevcut görsel güncellenecektir</text>
+                                }
+                                else
+                                {
+                                    <text>Önerilen boyut: 800x600px (JPG, PNG, GIF)</text>
+                                }
+                            </small>
+                        </div>
+
+                       
+                        <div class="mb-4" id="newImagePreviewContainer" style="display: none;">
+                            <label class="form-label">
+                                <i class="fas fa-eye text-warning me-2"></i>Yeni Görsel Önizleme
+                            </label>
+                            <div class="image-preview-wrapper">
+                                <img id="newImagePreview" src="" alt="Önizleme" class="img-fluid" />
+                                <button type="button" class="btn btn-sm btn-danger remove-preview" id="removePreview">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                      
+                        <div class="d-flex gap-3 justify-content-end mt-5">
+                            <a href="/Admin/Category/Index" class="cat-btn cat-btn-secondary cat-btn-lg">
+                                <i class="fas fa-times me-2"></i>İptal
+                            </a>
+                            <button type="submit" class="cat-btn cat-btn-warning cat-btn-lg">
+                                <i class="fas fa-sync-alt me-2"></i>Güncelle
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+         
+            <div class="card mt-4 cat-info-card">
+                <div class="card-body">
+                    <h6 class="card-title cat-info-title">
+                        <i class="fas fa-lightbulb me-2"></i>Güncelleme İpuçları
+                    </h6>
+                    <ul class="mb-0 text-muted small">
+                        <li>Kategori adını değiştirirken SEO uyumluluğuna dikkat edin</li>
+                        <li>Yeni görsel yüklemezseniz mevcut görsel korunacaktır</li>
+                        <li>Kategori adı değiştirildiğinde URL'ler etkilenebilir</li>
+                        <li>Bu kategoriye bağlı bloglar varsa dikkatli olun</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+    <script>
+        
+        document.getElementById('categoryImageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('newImagePreview').src = e.target.result;
+                    document.getElementById('newImagePreviewContainer').style.display = 'block';
+
+                   
+                    const currentImage = document.getElementById('currentImage');
+                    if (currentImage) {
+                        currentImage.parentElement.style.opacity = '0.5';
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+       
+        document.getElementById('removePreview').addEventListener('click', function() {
+            document.getElementById('categoryImageInput').value = '';
+            document.getElementById('newImagePreviewContainer').style.display = 'none';
+            document.getElementById('newImagePreview').src = '';
+
+            
+            const currentImage = document.getElementById('currentImage');
+            if (currentImage) {
+                currentImage.parentElement.style.opacity = '1';
+            }
+        });
+    </script>
+}
+
+<style>
+    .card {
+        border: none !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+
+    .card-header {
+        border-bottom: 2px solid rgba(255,255,255,0.2) !important;
+        font-weight: 600 !important;
+    }
+
+    .cat-header-warning {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    }
+
+        .cat-header-warning h5 {
+            color: #fff !important;
+        }
+
+    .form-label {
+        font-weight: 600 !important;
+        color: #495057 !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 1rem !important;
+    }
+
+        .form-label .text-danger {
+            font-size: 1.1rem !important;
+        }
+
+    .form-control {
+        border-radius: 8px !important;
+        border: 2px solid #e9ecef !important;
+        padding: 0.75rem 1rem !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.95rem !important;
+    }
+
+        .form-control:focus {
+            border-color: #f59e0b !important;
+            box-shadow: 0 0 0 0.2rem rgba(245, 158, 11, 0.15) !important;
+            transform: translateY(-1px) !important;
+        }
+
+    .form-text {
+        display: block !important;
+        margin-top: 0.5rem !important;
+        font-size: 0.875rem !important;
+    }
+
+   
+    .cat-info-alert {
+        background-color: #e0f2fe !important;
+        color: #075985 !important;
+        border: 1px solid #bae6fd !important;
+        border-radius: 8px !important;
+        padding: 0.75rem 1rem !important;
+    }
+
+   
+    .current-image-wrapper {
+        position: relative !important;
+        display: inline-block !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+        max-width: 100% !important;
+        transition: opacity 0.3s ease !important;
+    }
+
+        .current-image-wrapper img {
+            max-height: 300px !important;
+            border-radius: 12px !important;
+            display: block !important;
+        }
+
+    .current-image-overlay {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent) !important;
+        padding: 15px !important;
+    }
+
+    .current-image-label {
+        color: #fff !important;
+        font-weight: 600 !important;
+        font-size: 0.875rem !important;
+    }
+
+   
+    .image-preview-wrapper {
+        position: relative !important;
+        display: inline-block !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3) !important;
+        max-width: 100% !important;
+        border: 3px solid #f59e0b !important;
+    }
+
+        .image-preview-wrapper img {
+            max-height: 300px !important;
+            border-radius: 12px !important;
+            display: block !important;
+        }
+
+    .remove-preview {
+        position: absolute !important;
+        top: 10px !important;
+        right: 10px !important;
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+        background: #ef4444 !important;
+        border: none !important;
+    }
+
+    .image-preview-wrapper:hover .remove-preview {
+        opacity: 1 !important;
+    }
+
+    
+    .cat-btn {
+        padding: 0.75rem 2rem !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
+        font-size: 1rem !important;
+        text-decoration: none !important;
+        border: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        color: #fff !important;
+    }
+
+        .cat-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+            color: #fff !important;
+        }
+
+    .cat-btn-warning {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    }
+
+        .cat-btn-warning:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+        }
+
+    .cat-btn-secondary {
+        background: #6c757d !important;
+    }
+
+        .cat-btn-secondary:hover {
+            background: #5a6268 !important;
+        }
+
+    .text-danger.small {
+        font-size: 0.875rem !important;
+        margin-top: 0.35rem !important;
+        display: block !important;
+        font-weight: 500 !important;
+    }
+
+    .alert {
+        border-radius: 8px !important;
+        border: none !important;
+        font-weight: 500 !important;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da !important;
+        color: #721c24 !important;
+    }
+
+   
+    .cat-info-card {
+        border: 2px solid #f59e0b !important;
+        border-radius: 12px !important;
+    }
+
+    .cat-info-title {
+        font-weight: 700 !important;
+        margin-bottom: 1rem !important;
+        color: #d97706 !important;
+    }
+
+    ul {
+        padding-left: 1.5rem !important;
+    }
+
+        ul li {
+            margin-bottom: 0.5rem !important;
+        }
+
+ (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem !important;
+        }
+
+        .card-body {
+            padding: 1.5rem !important;
+        }
+
+        .d-flex.gap-3 {
+            flex-direction: column !important;
+            gap: 0.75rem !important;
+        }
+
+        .cat-btn {
+            width: 100% !important;
+        }
+
+        .form-control {
+            font-size: 16px !important; 
+        }
+
+        .current-image-wrapper img,
+        .image-preview-wrapper img {
+            max-height: 200px !important;
+        }
+    }
+</style>

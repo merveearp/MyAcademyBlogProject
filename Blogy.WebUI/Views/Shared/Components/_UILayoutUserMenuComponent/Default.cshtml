@@ -151,17 +151,13 @@
 						<a href="#" class="user-name">@ViewBag.User ▼</a>
 						<ul class="dropdown">
 							<li>
-								<a asp-area="" asp-controller="Profile" asp-action="Index">
+								<a asp-area="User" asp-controller="Profile" asp-action="Index">
 									<i class="bi bi-person"></i> Profil Görüntüle
 								</a>
 							</li>
+							
 							<li>
-								<a asp-area="" asp-controller="Profile" asp-action="Edit">
-									<i class="bi bi-pencil"></i> Profili Düzenle
-								</a>
-							</li>
-							<li>
-								<a asp-area="" asp-controller="Profile" asp-action="ChangePassword">
+								<a asp-area="User" asp-controller="Profile" asp-action="ChangePassword">
 									<i class="bi bi-key"></i> Şifre Değiştir
 								</a>
 							</li>

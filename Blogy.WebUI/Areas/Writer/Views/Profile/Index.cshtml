@@ -1,8 +1,7 @@
 ﻿@model EditProfileDto
 @{
-	ViewData["Title"] = "CreateRole";
-	Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
-
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/UILayout/Index.cshtml";
 }
 
 <div class="container mt-5 ">
@@ -83,10 +82,12 @@
 						<span class="text-danger">@Html.ValidationSummary()</span>
 					</div>
 
-
-					<div class="col-12 mt-3 mb-3 text-end">
-						<button type="submit" class="btn btn-dark px-4">Bilgileri Güncelle</button>
+					<div class="col-12 mt-3 mb-3 d-flex justify-content-end gap-2">
 						
+
+						<button type="submit" class="btn btn-dark px-4">
+							Bilgileri Güncelle
+						</button>
 					</div>
 
 				</div>

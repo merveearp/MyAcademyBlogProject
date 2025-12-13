@@ -1,90 +1,355 @@
 ﻿@model List<ResultBlogDto>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Blog Yönetimi";
     Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
-    int count = 0;
 }
 
-<div class="pd-20 card-box mb-30">
-    <div class="clearfix mb-20">
-        <div class="pull-left">
-            <h2 class="text-blue h2">Bloglar</h2>
-        </div>
-        <div class="pull-right">
-            <a href="/Admin/Blog/CreateBlog" class="btn btn-success">
-                Yeni Blog Oluştur
-            </a>
+<div class="container-fluid">
+   
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-1">Blog Yönetimi</h2>
+                    <p class="text-muted">Blog yazılarını görüntüleyin ve yönetin</p>
+                </div>
+                <a href="/Admin/Blog/CreateBlog" class="blog-create-btn">
+                    <i class="fas fa-plus me-2"></i>Yeni Blog Ekle
+                </a>
+            </div>
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Blog Kapak</th>
-                <th>Blog Başlığı</th>
-                <th>Açıklama</th>
-                <th>Kategori</th>
-                <th>Etiketler</th> 
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                count++;
-                <tr>
-                    <th>@count</th>
+   
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-0">
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="blog-table">
+                                <thead>
+                                    <tr>
+                                        <th width="60">#</th>
+                                        <th width="100">Kapak</th>
+                                        <th>Başlık</th>
+                                        <th>Açıklama</th>
+                                        <th>Kategori</th>
+                                        <th>Etiketler</th>
+                                        <th width="180" class="text-center">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var (item, index) in Model.Select((value, i) => (value, i + 1)))
+                                    {
+                                        <tr>
+                                            <td class="text-muted fw-bold">@index</td>
+                                            <td>
+                                                <div class="blog-cover-thumb">
+                                                    <img src="@item.CoverImage" alt="@item.Title" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="blog-title-cell">
+                                                    <h6 class="blog-title mb-1">@item.Title</h6>
+                                                    
+                                                </div>
+                                            </td>
 
-                    <td>
-                        <img src="@item.CoverImage"
-                             style="height:75px;width:75px;object-fit:cover;margin-right:10px;border-radius:6px;" />
-                    </td>
+                                            <td>
+                                                <div class="blog-title-cell">
+                                                    <h6 class="blog-title mb-1">@item.Title</h6>
+                                                    <p class="blog-desc mb-0">
+                                                        @(item.Description.Length > 80
+                                                            ? item.Description.Substring(0, 80) + "..."
+                                                            : item.Description)
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="category-badge">
+                                                    <i class="fas fa-folder me-1"></i>
+                                                    @item.Category.CategoryName
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="tags-cell">
+                                                    @if (item.BlogTags != null && item.BlogTags.Any())
+                                                    {
+                                                        @foreach (var blogTag in item.BlogTags.Take(3))
+                                                        {
+                                                            @if (blogTag.Tag != null)
+                                                            {
+                                                                <span class="tag-badge">
+                                                                    <i class="fas fa-tag"></i>
+                                                                    @blogTag.Tag.Name
+                                                                </span>
+                                                            }
+                                                        }
+                                                        @if (item.BlogTags.Count > 3)
+                                                        {
+                                                            <span class="tag-more">+@(item.BlogTags.Count - 3)</span>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted small">Etiket yok</span>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <a href="/Admin/Blog/UpdateBlog/@item.Id"
+                                                       class="action-btn btn-edit"
+                                                       title="Düzenle">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="/Admin/Blog/DeleteBlog/@item.Id"
+                                                       onclick="return confirm('Bu blog yazısını silmek istediğinizden emin misiniz?')"
+                                                       class="action-btn btn-delete"
+                                                       title="Sil">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <td>@item.Title</td>
-
-                    <td>
-                        @(item.Description.Length > 120
-                                            ? item.Description.Substring(0, 120) + "..."
-                                            : item.Description)
-                </td>
-
-                    <td>@item.Category.CategoryName</td>
-
-                  
-                    <td>
-                    @if (item.BlogTags != null && item.BlogTags.Any())
-                        {
-                            foreach (var blogTag in item.BlogTags)
-                            {
-                                if (blogTag.Tag != null)
-                                {
-                                    <span class="badge badge-info mr-1">
-                                        @blogTag.Tag.Name
-                                    </span>
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <span class="text-muted">Etiket Yok</span>
-                        }
-                    </td>
-
-                    <td>
-                        <a href="/Admin/Blog/DeleteBlog/@item.Id"
-                           onclick="return confirm('Bu öğeyi kalıcı olarak silmek istediğinizden emin misiniz?')"
-                           class="btn btn-danger btn-sm">
-                            Sil
-                        </a>
-                        <a href="/Admin/Blog/UpdateBlog/@item.Id"
-                           class="btn btn-info btn-sm">
-                            Güncelle
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                        <!-- Footer -->
+                        <div class="card-footer bg-white py-3">
+                            <span class="text-muted">Toplam <strong>@Model.Count</strong> blog yazısı</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
+                            <h5 class="text-muted mb-3">Henüz blog yazısı bulunmamaktadır.</h5>
+                            <a href="/Admin/Blog/CreateBlog" class="blog-create-btn">
+                                <i class="fas fa-plus me-2"></i>İlk Blog Yazısını Oluştur
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<style>
+    
+    .card {
+        border: none !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+
+   
+    .blog-table {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+        .blog-table thead {
+            background: #f8f9fa !important;
+        }
+
+        .blog-table th {
+            padding: 1rem !important;
+            font-weight: 600 !important;
+            color: #495057 !important;
+            font-size: 0.875rem !important;
+            border-bottom: 2px solid #e9ecef !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .blog-table td {
+            padding: 1rem !important;
+            vertical-align: middle !important;
+            border-bottom: 1px solid #f0f0f0 !important;
+        }
+
+        .blog-table tbody tr {
+            transition: all 0.2s ease !important;
+        }
+
+            .blog-table tbody tr:hover {
+                background-color: #f8f9fa !important;
+            }
+
+    /* Cover Image */
+    .blog-cover-thumb {
+        width: 80px !important;
+        height: 80px !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    }
+
+        .blog-cover-thumb img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+   
+    .blog-title-cell {
+        max-width: 300px !important;
+    }
+
+    .blog-title {
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        color: #2d3748 !important;
+        margin: 0 !important;
+    }
+
+    .blog-desc {
+        font-size: 0.8rem !important;
+        color: #718096 !important;
+        line-height: 1.4 !important;
+    }
+
+    /* Category Badge */
+    .category-badge {
+        display: inline-flex !important;
+        align-items: center !important;
+        padding: 0.4rem 0.8rem !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: #fff !important;
+        border-radius: 6px !important;
+        font-size: 0.8rem !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+    }
+
+    
+    .tags-cell {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.4rem !important;
+        max-width: 250px !important;
+    }
+
+    .tag-badge {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        padding: 0.3rem 0.6rem !important;
+        background: #e0e7ff !important;
+        color: #4338ca !important;
+        border-radius: 4px !important;
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+    }
+
+        .tag-badge i {
+            font-size: 0.7rem !important;
+        }
+
+    .tag-more {
+        display: inline-flex !important;
+        align-items: center !important;
+        padding: 0.3rem 0.6rem !important;
+        background: #f3f4f6 !important;
+        color: #6b7280 !important;
+        border-radius: 4px !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex !important;
+        gap: 0.5rem !important;
+        justify-content: center !important;
+    }
+
+    .action-btn {
+        width: 36px !important;
+        height: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 8px !important;
+        transition: all 0.2s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        cursor: pointer !important;
+    }
+
+    .btn-edit {
+        background: #e0f2fe !important;
+        color: #0369a1 !important;
+    }
+
+        .btn-edit:hover {
+            background: #0369a1 !important;
+            color: #fff !important;
+            transform: translateY(-2px) !important;
+        }
+
+    .btn-delete {
+        background: #fee2e2 !important;
+        color: #dc2626 !important;
+    }
+
+        .btn-delete:hover {
+            background: #dc2626 !important;
+            color: #fff !important;
+            transform: translateY(-2px) !important;
+        }
+
+    
+    .blog-create-btn {
+        padding: 0.625rem 1.5rem !important;
+        font-weight: 600 !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        border: none !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        border-radius: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        transition: all 0.3s ease !important;
+    }
+
+        .blog-create-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4) !important;
+            color: #fff !important;
+        }
+
+   
+    .card-footer {
+        border-top: 2px solid #f0f0f0 !important;
+    }
+
+
+    (max-width: 768px) {
+        .blog-title-cell {
+            max-width: 200px !important;
+        }
+
+        .tags-cell {
+            max-width: 150px !important;
+        }
+
+        .blog-table th,
+        .blog-table td {
+            padding: 0.75rem 0.5rem !important;
+            font-size: 0.875rem !important;
+        }
+
+        .blog-cover-thumb {
+            width: 60px !important;
+            height: 60px !important;
+        }
+    }
+</style>

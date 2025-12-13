@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Kategori Yönetimi";
     Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+    int count = 0;
 }
 
 <div class="container-fluid">
@@ -13,7 +14,7 @@
                     <h2 class="mb-1">Kategori Yönetimi</h2>
                     <p class="text-muted">Blog kategorilerini görüntüleyin ve yönetin</p>
                 </div>
-                <a href="/Admin/Category/CreateCategory" class="btn btn-primary">
+                <a href="/Admin/Category/CreateCategory" class="cat-create-btn">
                     <i class="fas fa-plus me-2"></i>Yeni Kategori Ekle
                 </a>
             </div>
@@ -26,9 +27,10 @@
         {
             @foreach (var item in Model)
             {
+                count++;
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
                     <div class="category-admin-card">
-                        
+                       
                         <div class="category-image-wrapper">
                             @if (!string.IsNullOrEmpty(item.CategoryImage))
                             {
@@ -42,11 +44,11 @@
                             }
                             <div class="category-badge">
                                 <i class="fas fa-hashtag"></i>
-                                <span>@item.Id</span>
+                                <span>@count</span>
                             </div>
                         </div>
 
-                       
+                        
                         <div class="category-body">
                             <h5 class="category-name">@item.CategoryName</h5>
                             <p class="category-date">
@@ -57,13 +59,13 @@
                            
                             <div class="category-actions">
                                 <a href="/Admin/Category/UpdateCategory/@item.Id"
-                                   class="btn btn-sm btn-primary"
+                                   class="cat-btn cat-btn-primary"
                                    title="Düzenle">
                                     <i class="fas fa-edit"></i>
                                     <span>Düzenle</span>
                                 </a>
                                 <a href="/Admin/Category/DeleteCategory/@item.Id"
-                                   class="btn btn-sm btn-danger"
+                                   class="cat-btn cat-btn-danger"
                                    onclick="return confirm('Bu kategoriyi silmek istediğinizden emin misiniz?')"
                                    title="Sil">
                                     <i class="fas fa-trash"></i>
@@ -82,7 +84,7 @@
                     <div class="card-body text-center py-5">
                         <i class="fas fa-folder-open fa-4x text-muted mb-3"></i>
                         <h5 class="text-muted">Henüz kategori bulunmamaktadır.</h5>
-                        <a href="/Admin/Category/CreateCategory" class="btn btn-primary mt-3">
+                        <a href="/Admin/Category/CreateCategory" class="cat-create-btn">
                             <i class="fas fa-plus me-2"></i>İlk Kategoriyi Oluştur
                         </a>
                     </div>
@@ -91,7 +93,7 @@
         }
     </div>
 
-    <!-- İstatistik Kartı -->
+
     @if (Model != null && Model.Any())
     {
         <div class="row mt-4">
@@ -223,43 +225,69 @@
 
     /* Aksiyon Butonları */
     .category-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: auto;
+        display: flex !important;
+        gap: 8px !important;
+        margin-top: auto !important;
     }
 
-        .category-actions .btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 0.5rem 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+    .cat-btn {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        padding: 0.5rem 1rem !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        font-size: 0.875rem !important;
+        color: #fff !important;
+    }
+
+        .cat-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            color: #fff !important;
         }
 
-            .category-actions .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
+    .cat-btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     }
 
-    .btn-danger {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        border: none;
+        .cat-btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%) !important;
+        }
+
+    .cat-btn-danger {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
     }
 
-    /* Başlık Alanı */
-    .btn-primary:not(.btn-sm) {
-        padding: 0.625rem 1.5rem;
-        font-weight: 600;
+        .cat-btn-danger:hover {
+            background: linear-gradient(135deg, #e082ea 0%, #e4465b 100%) !important;
+        }
+
+
+    .cat-create-btn {
+        padding: 0.625rem 1.5rem !important;
+        font-weight: 600 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        border-radius: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        transition: all 0.3s ease !important;
     }
+
+        .cat-create-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4) !important;
+            color: #fff !important;
+        }
 
     /* İstatistik Kartı */
     .stats-card {
@@ -296,21 +324,21 @@
         margin: 0;
     }
 
-    /* Boş Durum */
+   
     .card {
         border: none;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     }
 
-    /* Responsive */
-    (max-width: 1200px) {
+   
+(max-width: 1200px) {
         .category-image-wrapper {
             height: 160px;
         }
     }
 
-     (max-width: 768px) {
+ (max-width: 768px) {
         .d-flex.justify-content-between {
             flex-direction: column;
             gap: 1rem;
@@ -345,7 +373,7 @@
         }
     }
 
-    (max-width: 576px) {
+(max-width: 576px) {
         .category-actions {
             flex-direction: column;
         }

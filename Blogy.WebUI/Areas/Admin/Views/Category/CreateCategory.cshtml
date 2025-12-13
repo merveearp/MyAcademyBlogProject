@@ -1,30 +1,319 @@
 ﻿@model CreateCategoryDto
 @{
     ViewData["Title"] = "Yeni Kategori Oluştur";
-	Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
-
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
 }
 
+<div class="container-fluid">
+   
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-1">Yeni Kategori Oluştur</h2>
+                    <p class="text-muted">Yeni bir blog kategorisi ekleyin</p>
+                </div>
+                <a href="/Admin/Category/Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
+        </div>
+    </div>
 
-<div class="pd-20 card-box mb-30">
-	<div class="clearfix">
-		<div class="pull-left">
-			<h2 class="text-blue h2">Yeni Kategori Oluştur</h2>
-			<p class="mb-30">Yeni bir kategori ekleyebilirsiniz</p>
-		</div>
-	</div>
+   
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6">
+            <div class="card shadow-sm">
+                <div class="card-header cat-header-blue py-3">
+                    <h5 class="mb-0 text-white"><i class="fas fa-folder-plus me-2"></i>Kategori Bilgileri</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-	<form method="post">
-		<div class="form-group">
-			<label>Kategori Adı</label>
-			<input asp-for="Name" class="form-control" placeholder="Kategori adını girin" />
-			<span class="text-danger" asp-validation-for="Name"></span>
-		</div>
+                       
+                        <div class="mb-4">
+                            <label asp-for="Name" class="form-label">
+                                <i class="fas fa-tag text-primary me-2"></i>Kategori Adı
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Name"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="Örn: Teknoloji, Seyahat, Yemek..."
+                                   autofocus />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Kategori adı benzersiz olmalıdır
+                            </small>
+                        </div>
 
-		<button type="submit" class="btn btn-info mt-3">Kaydet</button>
-		<a href="/Admin/Category/Index" class="btn btn-secondary mt-3 ml-2">Geri Dön</a>
-	</form>
+                      
+                        <div class="mb-4">
+                            <label asp-for="CategoryImage" class="form-label">
+                                <i class="fas fa-image text-info me-2"></i>Kategori Görseli
+                            </label>
+                            <input asp-for="CategoryImage"
+                                   type="file"
+                                   class="form-control"
+                                   accept="image/*"
+                                   id="categoryImageInput" />
+                            <span asp-validation-for="CategoryImage" class="text-danger small"></span>
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Önerilen boyut: 800x600px (JPG, PNG, GIF)
+                            </small>
+                        </div>
 
-	
+                       
+                        <div class="mb-4" id="imagePreviewContainer" style="display: none;">
+                            <label class="form-label">
+                                <i class="fas fa-eye text-success me-2"></i>Görsel Önizleme
+                            </label>
+                            <div class="image-preview-wrapper">
+                                <img id="imagePreview" src="" alt="Önizleme" class="img-fluid" />
+                                <button type="button" class="btn btn-sm btn-danger remove-preview" id="removePreview">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
 
+                       
+                        <div class="d-flex gap-3 justify-content-end mt-5">
+                            <a href="/Admin/Category/Index" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times me-2"></i>İptal
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Kaydet
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+           
+            <div class="card mt-4 cat-info-card">
+                <div class="card-body">
+                    <h6 class="card-title cat-info-title">
+                        <i class="fas fa-lightbulb me-2"></i>İpuçları
+                    </h6>
+                    <ul class="mb-0 text-muted small">
+                        <li>Kategori adı kısa ve açıklayıcı olmalıdır</li>
+                        <li>Görsel yüklemek opsiyoneldir ancak kullanıcı deneyimini iyileştirir</li>
+                        <li>Yüksek kaliteli görseller kullanın (minimum 800px genişlik)</li>
+                        <li>Aynı kategoriden birden fazla oluşturmayın</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+    <script>
+       
+        document.getElementById('categoryImageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        
+        document.getElementById('removePreview').addEventListener('click', function() {
+            document.getElementById('categoryImageInput').value = '';
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+            document.getElementById('imagePreview').src = '';
+        });
+    </script>
+}
+
+<style>
+    .card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+        font-weight: 600;
+    }
+
+    .cat-header-blue {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;
+    }
+
+        .cat-header-blue h5 {
+            color: #fff !important;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+        .form-label .text-danger {
+            font-size: 1.1rem;
+        }
+
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+            transform: translateY(-1px);
+        }
+
+    .form-text {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+   
+    .image-preview-wrapper {
+        position: relative;
+        display: inline-block;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 100%;
+    }
+
+        .image-preview-wrapper img {
+            max-height: 300px;
+            border-radius: 12px;
+            display: block;
+        }
+
+    .remove-preview {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .image-preview-wrapper:hover .remove-preview {
+        opacity: 1;
+    }
+
+    
+    .btn {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+        }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+    .text-danger.small {
+        font-size: 0.875rem;
+        margin-top: 0.35rem;
+        display: block;
+        font-weight: 500;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        font-weight: 500;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Bilgilendirme Kartı */
+    .cat-info-card {
+        border: 2px solid #3b82f6 !important;
+        border-radius: 12px !important;
+    }
+
+    .cat-info-title {
+        font-weight: 700 !important;
+        margin-bottom: 1rem !important;
+        color: #1e40af !important;
+    }
+
+    ul {
+        padding-left: 1.5rem;
+    }
+
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+ (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem;
+        }
+
+        .card-body {
+            padding: 1.5rem !important;
+        }
+
+        .d-flex.gap-3 {
+            flex-direction: column;
+            gap: 0.75rem !important;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        .form-control {
+            font-size: 16px; /* iOS zoom önleme */
+        }
+
+        .image-preview-wrapper img {
+            max-height: 200px;
+        }
+    }
+</style>
