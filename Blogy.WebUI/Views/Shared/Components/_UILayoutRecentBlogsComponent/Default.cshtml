@@ -1,0 +1,45 @@
+﻿@model List<ResultBlogDto>
+@*
+    _UILayoutMenuComponent
+*@
+<div class="col-lg-4">
+	<div class="widget">
+		<h3 class="mb-4">Son Eklenen Bloglar</h3>
+		<div class="post-entry-footer">
+			<ul>
+				@foreach (var blog in Model)
+				{
+					<li>
+						<a asp-controller="Blog"
+						   asp-action="BlogDetails"
+						   asp-route-id="@blog.Id">
+							<img src="@blog.BlogImage1" alt="Image placeholder" class="me-4 rounded">
+							<div class="text">
+								<h4>@blog.Title</h4>
+
+								<div class="post-meta">
+									<span class="mr-2">
+										@blog.CreatedDate.ToString("dd MMM yyyy")
+									</span>
+								</div>
+
+								@if (blog.BlogTags != null && blog.BlogTags.Any())
+								{
+									<div class="mt-1">
+										@foreach (var bt in blog.BlogTags)
+										{
+											<a href="#"
+											   class="badge bg-light text-dark border me-1 mb-1">
+												@bt.Tag.Name
+											</a>
+										}
+									</div>
+								}
+							</div>
+						</a>
+					</li>
+				}
+			</ul>
+		</div>
+	</div>
+</div>

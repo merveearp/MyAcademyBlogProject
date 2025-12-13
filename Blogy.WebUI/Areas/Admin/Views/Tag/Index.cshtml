@@ -1,0 +1,51 @@
+﻿@model List<ResultTagDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+
+
+	int count = 0;
+}
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+	<div class="clearfix mb-20">
+		<div class="pull-left">
+			<h2 class="text-blue h2">Etiketler</h2>
+
+		</div>
+
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Etiket Adı</th>
+				<th>İşlemler</th>
+			</tr>
+
+		</thead>
+		<tbody>
+
+
+			@foreach (var item in Model)
+			{
+				count++;
+				<tr>
+					<th>@count</th>
+					<td>@item.Name</td>
+					
+					<td>
+
+						<a href="/Admin/Tag/DeleteTag/@item.Id" class="btn btn-danger">Sil</a>
+						<a href="/Admin/Tag/UpdateTag/@item.Id" class="btn btn-info">Güncelle</a>
+
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<a href="/Admin/Tag/CreateTag" class="btn btn-success">Yeni Etiket Oluştur</a>
+
+</div>
+<!-- basic table  End -->

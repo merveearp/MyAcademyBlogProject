@@ -1,0 +1,113 @@
+﻿@model List<ResultCategoryDto>
+
+<style>
+	
+	.auth-buttons {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 12px;
+	}
+
+	.auth-btn {
+		padding: 10px 24px;
+		border-radius: 8px;
+		font-weight: 600;
+		font-size: 14px;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		border: 2px solid transparent;
+		display: inline-block;
+	}
+
+	.auth-btn-login {
+		background: transparent;
+		color: #fff;
+		border: 2px solid #fff;
+	}
+
+		.auth-btn-login:hover {
+			background: #fff;
+			color: #3b82f6;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+		}
+
+	.auth-btn-register {
+		background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+		color: #fff;
+		border: 2px solid #3b82f6;
+	}
+
+		.auth-btn-register:hover {
+			background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+			color: #fff;
+		}
+
+	
+</style>
+
+<div class="menu-bg-wrap">
+	<div class="site-navigation">
+		<div class="row g-0 align-items-center">
+			<div class="col-2">
+				<a href="/Default/Index" class="logo m-0 float-start">Blogy<span class="text-primary">.</span></a>
+			</div>
+			<div class="col-8 text-center">
+				<form action="#" class="search-form d-inline-block d-lg-none">
+					<input type="text" class="form-control" placeholder="Ara..." />
+					<span class="bi-search"></span>
+				</form>
+				<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+
+					<li class="active">
+						<a asp-area="" asp-controller="Default" asp-action="Index">Anasayfa</a>
+					</li>
+
+					<li>
+						<a asp-area="" asp-controller="About" asp-action="Index">Hakkımızda</a>
+					</li>
+					<li class="has-children">
+						<a asp-area="" asp-controller="Category" asp-action="Index">Kategoriler</a>
+						<ul class="dropdown">
+							@foreach (var item in Model)
+							{
+								<li>
+									<a asp-area=""
+									   asp-controller="Blog"
+									   asp-action="GetBlogsByCategory"
+									   asp-route-categoryId="@item.Id">
+										@item.CategoryName
+									</a>
+								</li>
+							}
+						</ul>
+					</li>
+					<li>
+						<a asp-area="" asp-controller="Blog" asp-action="Index">Bloglar</a>
+					</li>
+
+					
+
+					<li>
+						<a asp-area="" asp-controller="ContactMessage" asp-action="CreateMessage">İletişim</a>
+					</li>
+
+
+				</ul>
+			</div>
+			<div class="col-2 text-end d-none d-lg-block">
+				<div class="auth-buttons">
+					<a href="/Login/Index" class="auth-btn auth-btn-login">
+						<i class="bi bi-box-arrow-in-right me-1"></i> Giriş Yap
+					</a>
+					<a href="/Register/Index" class="auth-btn auth-btn-register">
+						<i class="bi bi-person-plus me-1"></i> Üye Ol
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+﻿@model List<ResultBlogDto>
+
+@{
+
+    var leftBlogs = Model.Take(2).ToList();          
+    var middleBlog = Model.Skip(2).FirstOrDefault(); 
+    var rightBlogs = Model.Skip(3).Take(2).ToList();
+}
+
+<div class="row align-items-stretch retro-layout">
+   
+    <div class="col-md-4">
+        @foreach (var blog in leftBlogs)
+        {
+            <a asp-controller="Blog" asp-action="BlogDetails" asp-route-id="@blog.Id" class="h-entry mb-30 v-height gradient">
+                <div class="featured-img" style="background-image: url('@blog.CoverImage');"></div>
+                <div class="text">
+                    <span class="date">@blog.CreatedDate.ToString("dd MMM yyyy")</span>
+                    <h2>@blog.Title</h2>
+                </div>
+            </a>
+        }
+    </div>
+
+
+    <div class="col-md-4">
+        @if (middleBlog != null)
+        {
+            <a asp-controller="Blog" asp-action="BlogDetails" asp-route-id="@middleBlog.Id" class="h-entry img-5 h-100 gradient">
+                <div class="featured-img" style="background-image: url('@middleBlog.CoverImage');"></div>
+                <div class="text">
+                    <span class="date">@middleBlog.CreatedDate.ToString("dd MMM yyyy")</span>
+                    <h2>@middleBlog.Title</h2>
+                </div>
+            </a>
+        }
+    </div>
+
+   
+    <div class="col-md-4">
+        @foreach (var blog in rightBlogs)
+        {
+            <a asp-controller="Blog" asp-action="BlogDetails" asp-route-id="@blog.Id" class="h-entry mb-30 v-height gradient">
+                <div class="featured-img" style="background-image: url('@blog.CoverImage');"></div>
+                <div class="text">
+                    <span class="date">@blog.CreatedDate.ToString("dd MMM yyyy")</span>
+                    <h2>@blog.Title</h2>
+                </div>
+            </a>
+        }
+    </div>
+</div>

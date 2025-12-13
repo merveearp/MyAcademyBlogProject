@@ -1,0 +1,82 @@
+﻿@model EditProfileDto
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="container mt-5 ">
+	<h2 class="mb-4 text-center text-daner">Profil Bilgileri Güncelleme</h2>
+	<br />
+	<br />
+	<div class="row">
+
+		<div class="col-md-4 d-flex flex-column align-items-center text-center">
+
+			<div class="card p-3 d-flex flex-column align-items-center text-center">
+				<h5 class="text-secondary">Profil Resmi</h5>
+
+				<img src="@Model.ImageUrl"
+					 alt="Profil Resmi"
+					 style="height:180px;width:180px;object-fit:cover;border-radius:50%;border:3px solid #e5e5e5;" />
+
+				<div class="mt-3 w-100">
+					<label class="form-label">Profil Resmi Seçin</label>
+					<input type="file" asp-for="ImageFile" class="form-control" />
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<div class="col-8">
+			<form method="post" enctype="multipart/form-data">
+
+				<div class="row">
+
+					<div class="col-6">
+						<label>Ad</label>
+						<input type="text" asp-for="FirstName" class="form-control" required />
+
+						<label class="mt-2">Soyad</label>
+						<input type="text" asp-for="LastName" class="form-control" required />
+
+						<label class="mt-2">Unvan</label>
+						<input type="text" asp-for="Title" class="form-control" />
+					</div>
+
+					<div class="col-6">
+						<label>Kullanıcı Adı</label>
+						<input type="text" asp-for="UserName" class="form-control" required />
+
+						<label class="mt-2">Email</label>
+						<input type="email" asp-for="Email" class="form-control" required />
+
+						<label class="mt-2">Telefon Numarası</label>
+						<input type="text" asp-for="PhoneNumber" class="form-control" />
+
+						<input type="hidden" asp-for="ImageUrl" />
+					</div>
+
+					<div class="col-12 mt-3">
+						<label>Bilgileri Güncellemek İçin Mevcut Şifrenizi Girin</label>
+						<input type="password" asp-for="CurrentPassword" class="form-control" required />
+					</div>
+
+					<div class="col-12 mt-1">
+						<span class="text-danger">@Html.ValidationSummary()</span>
+					</div>
+
+
+					<div class="col-12 mt-3 text-end">
+						<button type="submit" class="btn btn-dark px-4">Bilgileri Güncelle</button>
+					</div>
+
+				</div>
+
+			</form>
+		</div>
+
+	</div>
+
+</div>

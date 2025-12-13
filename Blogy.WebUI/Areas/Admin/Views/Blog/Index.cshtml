@@ -1,0 +1,90 @@
+﻿@model List<ResultBlogDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+    int count = 0;
+}
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h2 class="text-blue h2">Bloglar</h2>
+        </div>
+        <div class="pull-right">
+            <a href="/Admin/Blog/CreateBlog" class="btn btn-success">
+                Yeni Blog Oluştur
+            </a>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Blog Kapak</th>
+                <th>Blog Başlığı</th>
+                <th>Açıklama</th>
+                <th>Kategori</th>
+                <th>Etiketler</th> 
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th>@count</th>
+
+                    <td>
+                        <img src="@item.CoverImage"
+                             style="height:75px;width:75px;object-fit:cover;margin-right:10px;border-radius:6px;" />
+                    </td>
+
+                    <td>@item.Title</td>
+
+                    <td>
+                        @(item.Description.Length > 120
+                                            ? item.Description.Substring(0, 120) + "..."
+                                            : item.Description)
+                </td>
+
+                    <td>@item.Category.CategoryName</td>
+
+                  
+                    <td>
+                    @if (item.BlogTags != null && item.BlogTags.Any())
+                        {
+                            foreach (var blogTag in item.BlogTags)
+                            {
+                                if (blogTag.Tag != null)
+                                {
+                                    <span class="badge badge-info mr-1">
+                                        @blogTag.Tag.Name
+                                    </span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">Etiket Yok</span>
+                        }
+                    </td>
+
+                    <td>
+                        <a href="/Admin/Blog/DeleteBlog/@item.Id"
+                           onclick="return confirm('Bu öğeyi kalıcı olarak silmek istediğinizden emin misiniz?')"
+                           class="btn btn-danger btn-sm">
+                            Sil
+                        </a>
+                        <a href="/Admin/Blog/UpdateBlog/@item.Id"
+                           class="btn btn-info btn-sm">
+                            Güncelle
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

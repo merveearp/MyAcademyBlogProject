@@ -1,0 +1,31 @@
+﻿@model List<ResultBlogTagDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Bloglar</th>
+            <th>Tagler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model.GroupBy(x => x.Blog))
+        {
+            <tr>
+                <td>@group.Key.Title</td>
+                <td>
+                    @foreach (var bt in group)
+                    {
+                        <span class="badge badge-info mr-1">@bt.Tag.Name</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

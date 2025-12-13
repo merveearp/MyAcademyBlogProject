@@ -1,0 +1,212 @@
+﻿@model UpdateContactInfoDto
+@{
+    ViewData["Title"] = "İletişim Bilgisi Düzenle";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Sayfa Başlığı -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-1">İletişim Bilgilerini Düzenle</h2>
+                    <p class="text-muted">Site iletişim bilgilerini güncelleyin</p>
+                </div>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="row">
+        <div class="col-lg-10 col-xl-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-edit me-2"></i>İletişim Bilgileri Güncelleme Formu</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Update" method="post">
+                        <input asp-for="Id" type="hidden" />
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Lokasyon -->
+                        <div class="mb-4">
+                            <label asp-for="Location" class="form-label">
+                                <i class="fas fa-map-marker-alt text-danger me-2"></i>Lokasyon
+                            </label>
+                            <textarea asp-for="Location" class="form-control" rows="3"
+                                      placeholder="Örn: Atatürk Caddesi No:123, Kadıköy/İstanbul"></textarea>
+                            <span asp-validation-for="Location" class="text-danger small"></span>
+                            <small class="form-text text-muted">Şirket adresinizi buraya yazın.</small>
+                        </div>
+
+                        <!-- Çalışma Saatleri -->
+                        <div class="mb-4">
+                            <label asp-for="OpenHours" class="form-label">
+                                <i class="fas fa-clock text-primary me-2"></i>Çalışma Saatleri
+                            </label>
+                            <textarea asp-for="OpenHours" class="form-control" rows="3"
+                                      placeholder="Örn: Pazartesi-Cuma: 09:00 - 18:00&#10;Cumartesi: 10:00 - 16:00&#10;Pazar: Kapalı"></textarea>
+                            <span asp-validation-for="OpenHours" class="text-danger small"></span>
+                            <small class="form-text text-muted">Haftalık çalışma saatlerinizi belirtin.</small>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label">
+                                <i class="fas fa-envelope text-info me-2"></i>Email Adresi
+                            </label>
+                            <input asp-for="Email" type="email" class="form-control"
+                                   placeholder="ornek@sirket.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                            <small class="form-text text-muted">İletişim için kullanılacak email adresi.</small>
+                        </div>
+
+                        <!-- Telefon -->
+                        <div class="mb-4">
+                            <label asp-for="Phone" class="form-label">
+                                <i class="fas fa-phone text-success me-2"></i>Telefon Numarası
+                            </label>
+                            <input asp-for="Phone" type="tel" class="form-control"
+                                   placeholder="+90 (555) 123 45 67" />
+                            <span asp-validation-for="Phone" class="text-danger small"></span>
+                            <small class="form-text text-muted">İletişim için telefon numaranız.</small>
+                        </div>
+
+                        <!-- Butonlar -->
+                        <div class="d-flex gap-3 justify-content-end mt-5">
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times me-2"></i>İptal
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Güncelle
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+        font-weight: 600;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+            transform: translateY(-1px);
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+        line-height: 1.6;
+    }
+
+    .form-text {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .btn {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+        }
+
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+    .text-danger.small {
+        font-size: 0.875rem;
+        margin-top: 0.35rem;
+        display: block;
+        font-weight: 500;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        font-weight: 500;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem;
+        }
+
+        .card-body {
+            padding: 1.5rem !important;
+        }
+
+        .d-flex.gap-3 {
+            flex-direction: column;
+            gap: 0.75rem !important;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        .form-control {
+            font-size: 16px; /* iOS zoom önleme */
+        }
+    }
+</style>

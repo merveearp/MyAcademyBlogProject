@@ -1,0 +1,86 @@
+﻿@model CreateBlogDto
+@{
+    ViewData["Title"] = "Yeni Blog Oluştur";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h2 class="text-blue h2">Yeni Blog Oluştur</h2>
+            <small class="text-muted">Yeni bir blog içeriği ekleyebilirsiniz.</small>
+        </div>
+    </div>
+
+    <form method="post">
+
+        <div class="form-group">
+            <label class="form-label">Blog Başlığı</label>
+            <input asp-for="Title" class="form-control" placeholder="Blog başlığını girin" />
+            <span class="text-danger" asp-validation-for="Title"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Blog Açıklaması</label>
+            <textarea asp-for="Description" class="form-control" rows="6" placeholder="Blog içeriğini girin"></textarea>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Kapak Resmi</label>
+            <input asp-for="CoverImage" class="form-control" placeholder="URL girin"
+                   oninput="previewImage('previewCover', this.value)" />
+            <span class="text-danger" asp-validation-for="CoverImage"></span>
+
+            <img id="previewCover" src=""
+                 style="width:150px;height:150px;object-fit:cover;margin-top:10px;display:none;border-radius:8px;" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Blog Resmi 1</label>
+            <input asp-for="BlogImage1" class="form-control" placeholder="URL girin"
+                   oninput="previewImage('preview1', this.value)" />
+            <span class="text-danger" asp-validation-for="BlogImage1"></span>
+
+            <img id="preview1" src=""
+                 style="width:150px;height:150px;object-fit:cover;margin-top:10px;display:none;border-radius:8px;" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Blog Resmi 2</label>
+            <input asp-for="BlogImage2" class="form-control" placeholder="URL girin"
+                   oninput="previewImage('preview2', this.value)" />
+            <span class="text-danger" asp-validation-for="BlogImage2"></span>
+
+            <img id="preview2" src=""
+                 style="width:150px;height:150px;object-fit:cover;margin-top:10px;display:none;border-radius:8px;" />
+        </div>
+
+
+        <div class="form-group">
+            <label class="form-label">Kategori</label>
+            <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories">
+                <option selected disabled>Kategori Seçiniz</option>
+            </select>
+            <span class="text-danger" asp-validation-for="CategoryId"></span>
+        </div>
+
+        <button class="btn btn-success mt-3">Kaydet</button>
+        <a href="/Admin/Blog/Index" class="btn btn-secondary mt-3 ml-2">Geri Dön</a>
+
+    </form>
+</div>
+
+<script>
+    function previewImage(imgId, url) {
+        const img = document.getElementById(imgId);
+
+        if (url && url.startsWith("http")) {
+            img.src = url;
+            img.style.display = "block";
+        } else {
+            img.src = "";
+            img.style.display = "none";
+        }
+    }
+</script>

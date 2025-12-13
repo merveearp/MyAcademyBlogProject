@@ -1,0 +1,90 @@
+﻿@model ResultAboutDto
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('@Model.TitleImage');">
+	<div class="container">
+		<div class="row same-height justify-content-center">
+			<div class="col-md-6">
+				<div class="post-entry text-center">
+					<h1 class="mb-4">Hakkımızda</h1>
+					<p class="mb-4">@Model.AboutTitle</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="section sec-halfs py-0">
+	<div class="container">
+
+		<div class="half-content d-lg-flex align-items-stretch">
+			<div class="img" style="background-image: url('@Url.Content(Model.Section1Image)')" data-aos="fade-in" data-aos-delay="100">
+			</div>
+
+			<div class="text">
+				<h2 class="heading text-primary mb-3">@Model.Section1Title</h2>
+				<p class="mb-4">
+					@Model.Section1Content
+				</p>
+			</div>
+		</div>
+
+		<div class="half-content d-lg-flex align-items-stretch">
+			<div class="img order-md-2" style="background-image: url('@Model.Section2Image')" data-aos="fade-in">
+			</div>
+			<div class="text">
+				<h2 class="heading text-primary mb-3">@Model.Section2Title</h2>
+				<p class="mb-4">
+					@Model.Section2Content
+				</p>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<div class="section sec-features">
+	<div class="container">
+		<div class="row g-5">
+
+			<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+				<div class="feature d-flex">
+					<span class="bi-bag-check-fill"></span>
+					<div>
+						<h3>Blogunu Oluştur</h3>
+						<p>Düşüncelerini, deneyimlerini ve içeriklerini profesyonel bir dille paylaşabileceğin modern bir blog alanı oluştur.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+				<div class="feature d-flex">
+					<span class="bi-wallet-fill"></span>
+					<div>
+						<h3>Kaynaklar ve Öneriler</h3>
+						<p>Teknoloji, yazılım ve güncel konulara dair hazırlanan içeriklerle kendini geliştireceğin güçlü bir bilgi kaynağına eriş.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+				<div class="feature d-flex">
+					<span class="bi-pie-chart-fill"></span>
+					<div>
+						<h3>Sana Özel Blog İçerikleri</h3>
+						<p>İlgi alanlarına göre hazırlanmış, düzenli olarak güncellenen blog yazılarıyla sana özel bir dijital okuma deneyimi sunuyoruz.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+</div>
+
+@await Component.InvokeAsync("_DefaultAboutTeamComponent");
+

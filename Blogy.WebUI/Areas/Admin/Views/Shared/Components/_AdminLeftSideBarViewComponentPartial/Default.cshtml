@@ -1,0 +1,400 @@
+﻿@*
+    Modern Admin Sidebar 
+*@
+<aside class="blogy-sidebar">
+    
+    <div class="blogy-sidebar-header">
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="blogy-logo-link">
+            <div class="blogy-logo-container">
+                <i class="fas fa-blog"></i>
+                <span class="blogy-logo-text">Blogy Admin</span>
+            </div>
+        </a>
+    </div>
+
+   
+    <nav class="blogy-sidebar-nav">
+        <div class="blogy-nav-wrapper">
+            
+            <div class="blogy-nav-section">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-home"></i>
+                    <span class="blogy-nav-text">Anasayfa</span>
+                </a>
+            </div>
+
+           
+            <div class="blogy-nav-section">
+                <div class="blogy-nav-section-title">İçerik Yönetimi</div>
+
+                <a asp-area="Admin" asp-controller="About" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="blogy-nav-text">Hakkımda</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-folder"></i>
+                    <span class="blogy-nav-text">Kategoriler</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="Blog" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="blogy-nav-text">Bloglar</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="Tag" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-tags"></i>
+                    <span class="blogy-nav-text">Etiketler</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="BlogTag" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-link"></i>
+                    <span class="blogy-nav-text">Blog-Etiket Bağlantısı</span>
+                </a>
+            </div>
+
+           
+            <div class="blogy-nav-section">
+                <div class="blogy-nav-section-title">İletişim & Sosyal</div>
+
+                <a asp-area="Admin" asp-controller="Comment" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span class="blogy-nav-text">Yorumlar</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="ContactMessage" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-envelope"></i>
+                    <span class="blogy-nav-text">Mesajlar</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="ContactInfo" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-address-card"></i>
+                    <span class="blogy-nav-text">İletişim Bilgileri</span>
+                </a>
+
+                <a asp-area="Admin" asp-controller="Social" asp-action="Index" class="blogy-nav-item">
+                    <i class="fas fa-share-alt"></i>
+                    <span class="blogy-nav-text">Sosyal Medya</span>
+                </a>
+            </div>
+
+          
+            <div class="blogy-nav-section">
+                <div class="blogy-nav-section-title">Kullanıcı Yönetimi</div>
+
+                <div class="blogy-nav-dropdown">
+                    <a href="javascript:void(0)" class="blogy-nav-item blogy-dropdown-toggle">
+                        <i class="fas fa-users"></i>
+                        <span class="blogy-nav-text">Kullanıcılar</span>
+                        <i class="fas fa-chevron-down blogy-dropdown-icon"></i>
+                    </a>
+                    <div class="blogy-dropdown-menu">
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="blogy-dropdown-item">
+                            <i class="fas fa-list"></i>
+                            <span>Kullanıcı Listesi</span>
+                        </a>
+                        <a asp-area="Admin" asp-controller="Role" asp-action="Index" class="blogy-dropdown-item">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Roller</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blogy-nav-section">
+                <div class="blogy-nav-section-title">Hesap</div>
+
+                <div class="blogy-nav-dropdown">
+                    <a href="javascript:void(0)" class="blogy-nav-item blogy-dropdown-toggle">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="blogy-nav-text">Profil</span>
+                        <i class="fas fa-chevron-down blogy-dropdown-icon"></i>
+                    </a>
+                    <div class="blogy-dropdown-menu">
+                        <a asp-area="Admin" asp-controller="Profile" asp-action="Index" class="blogy-dropdown-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>Profil Bilgileri</span>
+                        </a>
+                        <a asp-area="Admin" asp-controller="ChangePassword" asp-action="Index" class="blogy-dropdown-item">
+                            <i class="fas fa-key"></i>
+                            <span>Şifre Değiştir</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+          
+            <div class="blogy-nav-section blogy-nav-section-bottom">
+                <a asp-area="" asp-controller="Login" asp-action="Logout" class="blogy-nav-item blogy-logout-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="blogy-nav-text">Çıkış Yap</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</aside>
+
+<style>
+   
+    .blogy-sidebar {
+        width: 260px !important;
+        height: 100vh !important;
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        z-index: 9999 !important;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+    }
+
+   
+    .blogy-sidebar-header {
+        padding: 1.5rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .blogy-logo-link {
+        text-decoration: none !important;
+        display: block !important;
+    }
+
+    .blogy-logo-container {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        color: #fff !important;
+    }
+
+        .blogy-logo-container i {
+            font-size: 28px !important;
+            color: #667eea !important;
+        }
+
+    .blogy-logo-text {
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+    }
+
+   
+    .blogy-sidebar-nav {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding: 1rem 0 !important;
+    }
+
+        .blogy-sidebar-nav::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        .blogy-sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-radius: 3px !important;
+        }
+
+    .blogy-nav-wrapper {
+        padding: 0 0.75rem !important;
+    }
+
+   
+    .blogy-nav-section {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .blogy-nav-section-bottom {
+        margin-top: auto !important;
+        padding-top: 1rem !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .blogy-nav-section-title {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+   
+    .blogy-nav-item {
+        display: flex !important;
+        align-items: center !important;
+        padding: 0.75rem 1rem !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        text-decoration: none !important;
+        border-radius: 8px !important;
+        margin-bottom: 0.25rem !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+        cursor: pointer !important;
+    }
+
+        .blogy-nav-item::before {
+            content: '' !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            height: 100% !important;
+            width: 3px !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            transform: scaleY(0) !important;
+            transition: transform 0.3s ease !important;
+        }
+
+        .blogy-nav-item:hover,
+        .blogy-nav-item.active {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+            transform: translateX(4px) !important;
+        }
+
+            .blogy-nav-item:hover::before,
+            .blogy-nav-item.active::before {
+                transform: scaleY(1) !important;
+            }
+
+        .blogy-nav-item i:first-child {
+            width: 24px !important;
+            font-size: 1.125rem !important;
+            margin-right: 12px !important;
+        }
+
+    .blogy-nav-text {
+        flex: 1 !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+    }
+
+    .blogy-nav-dropdown {
+        margin-bottom: 0.25rem !important;
+    }
+
+    .blogy-dropdown-toggle {
+        cursor: pointer !important;
+    }
+
+    .blogy-dropdown-icon {
+        font-size: 0.75rem !important;
+        transition: transform 0.3s ease !important;
+        margin-left: auto !important;
+    }
+
+    .blogy-nav-dropdown.active .blogy-dropdown-icon {
+        transform: rotate(180deg) !important;
+    }
+
+    .blogy-dropdown-menu {
+        max-height: 0 !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease !important;
+        margin-left: 1rem !important;
+    }
+
+    .blogy-nav-dropdown.active .blogy-dropdown-menu {
+        max-height: 300px !important;
+    }
+
+    .blogy-dropdown-item {
+        display: flex !important;
+        align-items: center !important;
+        padding: 0.625rem 1rem !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        text-decoration: none !important;
+        border-radius: 6px !important;
+        margin: 0.25rem 0 !important;
+        font-size: 0.875rem !important;
+        transition: all 0.3s ease !important;
+    }
+
+        .blogy-dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.05) !important;
+            color: #fff !important;
+            padding-left: 1.25rem !important;
+        }
+
+        .blogy-dropdown-item i {
+            width: 20px !important;
+            font-size: 0.875rem !important;
+            margin-right: 10px !important;
+        }
+
+    /* Logout Item */
+    .blogy-logout-item {
+        background: rgba(239, 68, 68, 0.1) !important;
+        color: #fca5a5 !important;
+    }
+
+        .blogy-logout-item:hover {
+            background: rgba(239, 68, 68, 0.2) !important;
+            color: #ef4444 !important;
+        }
+
+    /* Main content offset */
+    .main-container {
+        margin-left: 260px !important;
+    }
+
+    /* Responsive */
+ (max-width: 768px) {
+        .blogy-sidebar {
+            transform: translateX(-100%) !important;
+        }
+
+            .blogy-sidebar.active {
+                transform: translateX(0) !important;
+            }
+
+        .main-container {
+            margin-left: 0 !important;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+       
+        const dropdownToggles = document.querySelectorAll('.blogy-dropdown-toggle');
+
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = this.closest('.blogy-nav-dropdown');
+
+               
+                document.querySelectorAll('.blogy-nav-dropdown').forEach(d => {
+                    if (d !== dropdown) {
+                        d.classList.remove('active');
+                    }
+                });
+
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        
+        const currentPath = window.location.pathname.toLowerCase();
+        const navItems = document.querySelectorAll('.blogy-nav-item:not(.blogy-dropdown-toggle), .blogy-dropdown-item');
+
+        navItems.forEach(item => {
+            const href = item.getAttribute('href');
+            if (href && href.toLowerCase() === currentPath) {
+                item.classList.add('active');
+
+              
+                const dropdown = item.closest('.blogy-nav-dropdown');
+                if (dropdown) {
+                    dropdown.classList.add('active');
+                }
+            }
+        });
+    });
+</script>

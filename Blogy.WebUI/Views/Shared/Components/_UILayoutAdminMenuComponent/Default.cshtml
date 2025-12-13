@@ -1,0 +1,179 @@
+﻿@model List<ResultCategoryDto>
+
+<style>
+	.user-box {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 15px;
+	}
+
+		.user-box img {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 2px solid #fff;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+		}
+
+	.user-name {
+		font-weight: 600;
+		color: #fff;
+		white-space: nowrap;
+		font-size: 14px;
+		text-decoration: none;
+	}
+
+	.logout-btn {
+		background: #dc3545;
+		color: #fff;
+		padding: 8px 16px;
+		border-radius: 5px;
+		text-decoration: none;
+		font-size: 14px;
+		transition: all 0.3s ease;
+	}
+
+		.logout-btn:hover {
+			background: #c82333;
+			color: #fff;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+		}
+
+	/* Profil Dropdown Menüsü */
+	.profile-menu {
+		position: relative;
+		display: inline-block;
+	}
+
+		.profile-menu .dropdown {
+			position: absolute;
+			right: 0;
+			top: 100%;
+			margin-top: 10px;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+			min-width: 200px;
+			padding: 0;
+			list-style: none;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-10px);
+			transition: all 0.3s ease;
+			z-index: 1000;
+		}
+
+		.profile-menu:hover .dropdown {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.profile-menu .dropdown li {
+			list-style: none;
+			border-bottom: 1px solid #f0f0f0;
+		}
+
+			.profile-menu .dropdown li:last-child {
+				border-bottom: none;
+			}
+
+			.profile-menu .dropdown li a {
+				display: block;
+				padding: 12px 20px;
+				color: #333;
+				text-decoration: none;
+				transition: all 0.3s ease;
+				font-size: 14px;
+			}
+
+				.profile-menu .dropdown li a:hover {
+					background: #f8f9fa;
+					color: #3b82f6;
+					padding-left: 25px;
+				}
+
+				.profile-menu .dropdown li a i {
+					margin-right: 8px;
+					width: 16px;
+					display: inline-block;
+				}
+</style>
+
+<div class="menu-bg-wrap">
+	<div class="site-navigation">
+		<div class="row g-0 align-items-center">
+			<div class="col-2">
+				<a href="/Default/Index" class="logo m-0 float-start">Blogy<span class="text-primary">.</span></a>
+			</div>
+			<div class="col-8 text-center">
+				<form action="#" class="search-form d-inline-block d-lg-none">
+					<input type="text" class="form-control" placeholder="Ara..." />
+					<span class="bi-search"></span>
+				</form>
+				<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+					<li class="active">
+						<a asp-area="" asp-controller="Default" asp-action="Index">Anasayfa</a>
+					</li>
+					<li>
+						<a asp-area="" asp-controller="About" asp-action="Index">Hakkımızda</a>
+					</li>
+					<li class="has-children">
+						<a asp-area="" asp-controller="Category" asp-action="Index">Kategoriler</a>
+						<ul class="dropdown">
+							@foreach (var item in Model)
+							{
+								<li>
+									<a asp-area=""
+									   asp-controller="Blog"
+									   asp-action="GetBlogsByCategory"
+									   asp-route-categoryId="@item.Id">
+										@item.CategoryName
+									</a>
+								</li>
+							}
+						</ul>
+					</li>
+					<li>
+						<a asp-area="" asp-controller="Blog" asp-action="Index">Bloglar</a>
+					</li>
+					<li>
+						<a asp-area="" asp-controller="ContactMessage" asp-action="CreateMessage">İletişim</a>
+					</li>
+					<li>
+						<a asp-area="Admin" asp-controller="Home" asp-action="Index">Yönetim Paneli</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-2 text-end">
+				<div class="user-box">
+					<img src="@ViewBag.ProfileImage" alt="@ViewBag.User" />
+					<div class="profile-menu">
+						<a href="#" class="user-name">@ViewBag.User ▼</a>
+						<ul class="dropdown">
+							<li>
+								<a asp-area="" asp-controller="Profile" asp-action="Index">
+									<i class="bi bi-person"></i> Profil Görüntüle
+								</a>
+							</li>
+							<li>
+								<a asp-area="" asp-controller="Profile" asp-action="Edit">
+									<i class="bi bi-pencil"></i> Profili Düzenle
+								</a>
+							</li>
+							<li>
+								<a asp-area="" asp-controller="Profile" asp-action="ChangePassword">
+									<i class="bi bi-key"></i> Şifre Değiştir
+								</a>
+							</li>
+						</ul>
+					</div>
+					<a href="/Login/Logout" class="logout-btn">Çıkış Yap</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

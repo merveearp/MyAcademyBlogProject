@@ -1,0 +1,33 @@
+﻿@model List<ResultSocialDto>
+
+<div class="col-lg-4">
+
+
+    <div class="widget">
+        <h3 class="mb-4">Hakkımda</h3>
+        <p>
+            Yazılım geliştirme, .NET dünyası, teknoloji ve modern web projeleri üzerine
+            içerikler paylaştığım kişisel bloguma hoş geldin.
+            Burada hem teknik yazılar hem de deneyimlerimi bulabilirsin.
+        </p>
+    </div>
+
+
+    <div class="widget">
+        <h3>Sosyal Medya</h3>
+        <ul class="list-unstyled social">
+
+            @foreach (var social in Model)
+            {
+                <li class="d-flex align-items-center mb-2">
+                    <a href="@social.Url" target="_blank" class="d-flex align-items-center gap-2">
+                        <span class="@social.Icon" style="font-size:18px;"></span>
+                        <span>@social.Name</span>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+</div>

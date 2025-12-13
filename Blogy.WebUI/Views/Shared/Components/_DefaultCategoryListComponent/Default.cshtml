@@ -1,0 +1,17 @@
+﻿@model List<ResultCategoryDto>
+
+<div class="sidebar-box">
+    <h3 class="heading">Kategoriler</h3>
+    <ul class="categories">
+        @foreach (var category in Model)
+        {
+            <li>
+                <a asp-controller="Blog"
+                   asp-action="GetBlogsByCategory"
+                   asp-route-categoryId="@category.Id">
+                    @category.CategoryName <span>@category.Blogs.Count()</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,357 @@
+﻿@model List<ResultCategoryDto>
+@{
+    ViewData["Title"] = "Kategori Yönetimi";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+   
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-1">Kategori Yönetimi</h2>
+                    <p class="text-muted">Blog kategorilerini görüntüleyin ve yönetin</p>
+                </div>
+                <a href="/Admin/Category/CreateCategory" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Yeni Kategori Ekle
+                </a>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="category-admin-card">
+                        
+                        <div class="category-image-wrapper">
+                            @if (!string.IsNullOrEmpty(item.CategoryImage))
+                            {
+                                <img src="@item.CategoryImage" alt="@item.CategoryName" class="category-image" />
+                            }
+                            else
+                            {
+                                <div class="category-placeholder">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                            }
+                            <div class="category-badge">
+                                <i class="fas fa-hashtag"></i>
+                                <span>@item.Id</span>
+                            </div>
+                        </div>
+
+                       
+                        <div class="category-body">
+                            <h5 class="category-name">@item.CategoryName</h5>
+                            <p class="category-date">
+                                <i class="far fa-calendar me-2"></i>
+                                @item.CreatedDate.ToString("dd.MM.yyyy")
+                            </p>
+
+                           
+                            <div class="category-actions">
+                                <a href="/Admin/Category/UpdateCategory/@item.Id"
+                                   class="btn btn-sm btn-primary"
+                                   title="Düzenle">
+                                    <i class="fas fa-edit"></i>
+                                    <span>Düzenle</span>
+                                </a>
+                                <a href="/Admin/Category/DeleteCategory/@item.Id"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Bu kategoriyi silmek istediğinizden emin misiniz?')"
+                                   title="Sil">
+                                    <i class="fas fa-trash"></i>
+                                    <span>Sil</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-folder-open fa-4x text-muted mb-3"></i>
+                        <h5 class="text-muted">Henüz kategori bulunmamaktadır.</h5>
+                        <a href="/Admin/Category/CreateCategory" class="btn btn-primary mt-3">
+                            <i class="fas fa-plus me-2"></i>İlk Kategoriyi Oluştur
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- İstatistik Kartı -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="stats-card">
+                    <div class="stats-item">
+                        <i class="fas fa-folder text-primary"></i>
+                        <div class="stats-content">
+                            <h3>@Model.Count</h3>
+                            <p>Toplam Kategori</p>
+                        </div>
+                    </div>
+                    <div class="stats-item">
+                        <i class="fas fa-calendar-plus text-success"></i>
+                        <div class="stats-content">
+                            <h3>@Model.OrderByDescending(x => x.CreatedDate).FirstOrDefault()?.CreatedDate.ToString("dd.MM.yyyy")</h3>
+                            <p>Son Ekleme</p>
+                        </div>
+                    </div>
+                    <div class="stats-item">
+                        <i class="fas fa-image text-info"></i>
+                        <div class="stats-content">
+                            <h3>@Model.Count(x => !string.IsNullOrEmpty(x.CategoryImage))</h3>
+                            <p>Görselli Kategori</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    /* Kategori Kartı */
+    .category-admin-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .category-admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Resim Alanı */
+    .category-image-wrapper {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+        background: #f8f9fa;
+    }
+
+    .category-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .category-admin-card:hover .category-image {
+        transform: scale(1.1);
+    }
+
+    .category-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+        .category-placeholder i {
+            font-size: 3.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+    .category-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .category-badge i {
+            font-size: 0.75rem;
+        }
+
+    /* Kart İçeriği */
+    .category-body {
+        padding: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .category-date {
+        font-size: 0.875rem;
+        color: #718096;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Aksiyon Butonları */
+    .category-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: auto;
+    }
+
+        .category-actions .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .category-actions .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border: none;
+    }
+
+    /* Başlık Alanı */
+    .btn-primary:not(.btn-sm) {
+        padding: 0.625rem 1.5rem;
+        font-weight: 600;
+    }
+
+    /* İstatistik Kartı */
+    .stats-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .stats-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .stats-item i {
+            font-size: 2.5rem;
+        }
+
+    .stats-content h3 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0;
+    }
+
+    .stats-content p {
+        font-size: 0.875rem;
+        color: #718096;
+        margin: 0;
+    }
+
+    /* Boş Durum */
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Responsive */
+    (max-width: 1200px) {
+        .category-image-wrapper {
+            height: 160px;
+        }
+    }
+
+     (max-width: 768px) {
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start !important;
+        }
+
+        .btn-primary:not(.btn-sm) {
+            width: 100%;
+        }
+
+        .category-image-wrapper {
+            height: 200px;
+        }
+
+        .stats-card {
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .stats-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+            .stats-item i {
+                font-size: 2rem;
+            }
+
+        .stats-content h3 {
+            font-size: 1.5rem;
+        }
+    }
+
+    (max-width: 576px) {
+        .category-actions {
+            flex-direction: column;
+        }
+
+            .category-actions .btn span {
+                display: inline;
+            }
+    }
+</style>

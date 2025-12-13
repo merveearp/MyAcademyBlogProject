@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+
+<!-- Start retroy layout blog posts -->
+<section class="section bg-light">
+	
+	<div class="container">
+@await Component.InvokeAsync("_DefaultCoverBlogsComponent")
+	</div>
+</section>
+<!-- End retroy layout blog posts -->
+<!-- Start posts-entry -->
+
+@await Component.InvokeAsync("_DefaultBlogsComponent")
+
+
+

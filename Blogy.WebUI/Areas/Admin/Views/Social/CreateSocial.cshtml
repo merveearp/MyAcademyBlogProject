@@ -1,0 +1,38 @@
+﻿@model CreateSocialDto
+@{
+    ViewData["Title"] = "Yeni Sosyal Medya Hesabı Ekle";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix">
+        <div class="pull-left">
+            <h2 class="text-blue h2">Yeni Sosyal Medya Hesabı Ekle</h2>
+            <p class="mb-30">Yeni bir sosyal medya bağlantısı ekleyebilirsiniz.</p>
+        </div>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label>Sosyal Medya Adı</label>
+            <input asp-for="Name" class="form-control" placeholder="Örn: Instagram, LinkedIn" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+
+        <div class="form-group">
+            <label>URL</label>
+            <input asp-for="Url" class="form-control" placeholder="Örn: https://www.instagram.com/kullaniciadi" />
+            <span class="text-danger" asp-validation-for="Url"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Icon Class</label>
+            <input asp-for="Icon" class="form-control" placeholder="Örn: icon-instagram veya fa fa-instagram" />
+            <span class="text-danger" asp-validation-for="Icon"></span>
+        </div>
+
+        <button type="submit" class="btn btn-info mt-3">Kaydet</button>
+    </form>
+
+    <a href="/Admin/Social/Index" class="btn btn-secondary mt-3 ml-2">Geri Dön</a>
+</div>

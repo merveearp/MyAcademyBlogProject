@@ -1,0 +1,42 @@
+﻿@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+@await Component.InvokeAsync("_AdminHeadViewComponentPartial")
+
+<body style="min-height:100vh; display:flex; flex-direction:column;">
+
+	<div class="pre-loader">
+		<div class="pre-loader-box">
+			<div class="loader-logo"><img src="/ADMIN/vendors/images/deskapp-logo.svg" alt=""></div>
+			<div class='loader-progress' id="progress_div">
+				<div class='bar' id='bar1'></div>
+			</div>
+			<div class='percent' id='percent1'>0%</div>
+			<div class="loading-text">
+				Yükleniyor...
+			</div>
+		</div>
+	</div>
+
+
+	@await Component.InvokeAsync("_AdminHeaderViewComponentPartial")
+	@await Component.InvokeAsync("_AdminRightSideBarViewComponentPartial")
+	@await Component.InvokeAsync("_AdminLeftSideBarViewComponentPartial")
+
+	<!-- ANA İÇERİK -->
+	<div class="main-container flex-grow-1">
+		@RenderBody()
+	</div>
+
+
+	<div class="footer-wrap pd-20 mb-20 card-box mt-auto">
+		DeskApp - Bootstrap 4 Admin Template By
+		<a href="https://github.com/dropways" target="_blank">Merve Arpacıoğlu Türk</a>
+	</div>
+
+	@await Component.InvokeAsync("_AdminScriptsViewComponentPartial")
+</body>
+</html>

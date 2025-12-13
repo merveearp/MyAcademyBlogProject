@@ -1,0 +1,29 @@
+﻿@using Blogy.Entity.Entities
+@model List<AppUser>
+
+<div class="section">
+	<div class="container">
+
+		<div class="row mb-5">
+			<div class="col-lg-5 mx-auto text-center" data-aos="fade-up">
+				<h2 class="heading text-primary">Ekibimiz</h2>
+				<p>Takımımızdaki profesyonel yazarlar ve yöneticiler</p>
+			</div>
+		</div>
+
+		<div class="row">
+
+			@foreach (var user in Model)
+			{
+				<div class="col-lg-4 mb-4 text-center" data-aos="fade-up">
+					<img src="@user.ImageUrl" class="img-fluid w-50 rounded-circle mb-3" />
+
+					<h5 class="text-black">@user.FirstName @user.LastName</h5>
+
+				</div>
+			}
+
+		</div>
+
+	</div>
+</div>

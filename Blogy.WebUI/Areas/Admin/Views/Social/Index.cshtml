@@ -1,0 +1,59 @@
+﻿@model List<ResultSocialDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+    int count = 0;
+}
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h2 class="text-blue h2">Sosyal Hesaplar</h2>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Sosyal Medya </th>
+                <th>URL</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>@count</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Icon))
+                        {
+                            <i class="@item.Icon" style="font-size:22px;" title="@item.Name"></i>
+                        }
+                        else
+                        {
+                            <span class="badge badge-secondary">Icon Yok</span>
+                        }
+                    </td>
+
+                    <td>@item.Url</td>
+                    <td>
+                        <i class="@item.Icon" style="font-size:20px;"></i>
+                    </td>
+                    <td>
+                        <a href="/Admin/Social/DeleteSocial/@item.Id" class="btn btn-danger">Sil</a>
+                        <a href="/Admin/Social/UpdateSocial/@item.Id" class="btn btn-info">Güncelle</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="/Admin/Social/CreateSocial" class="btn btn-success">Yeni Sosyal Hesap Ekle</a>
+
+</div>
+<!-- basic table  End -->

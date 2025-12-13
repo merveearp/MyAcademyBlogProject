@@ -1,0 +1,25 @@
+﻿@model UpdateTagDto
+@{
+    ViewData["Title"] = "UpdateTag";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+div class="pd-20 card-box mb-30">
+<div class="clearfix mb-20">
+    <div class="pull-left">
+        <h2 class="text-blue h2">Etiket Güncelle</h2>
+    </div>
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label class="form-label">Etiket Adı</label>
+        <input asp-for="Name" class="form-control" placeholder="Etiket adını girin" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+
+    <button type="submit" class="btn btn-info mt-3">Güncelle</button>
+    <a href="/Admin/Tag/Index" class="btn btn-secondary mt-3 ml-2">Geri Dön</a>
+</form>
+</div>

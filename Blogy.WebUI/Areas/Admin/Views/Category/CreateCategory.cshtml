@@ -1,0 +1,30 @@
+﻿@model CreateCategoryDto
+@{
+    ViewData["Title"] = "Yeni Kategori Oluştur";
+	Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+
+}
+
+
+<div class="pd-20 card-box mb-30">
+	<div class="clearfix">
+		<div class="pull-left">
+			<h2 class="text-blue h2">Yeni Kategori Oluştur</h2>
+			<p class="mb-30">Yeni bir kategori ekleyebilirsiniz</p>
+		</div>
+	</div>
+
+	<form method="post">
+		<div class="form-group">
+			<label>Kategori Adı</label>
+			<input asp-for="Name" class="form-control" placeholder="Kategori adını girin" />
+			<span class="text-danger" asp-validation-for="Name"></span>
+		</div>
+
+		<button type="submit" class="btn btn-info mt-3">Kaydet</button>
+		<a href="/Admin/Category/Index" class="btn btn-secondary mt-3 ml-2">Geri Dön</a>
+	</form>
+
+	
+
+</div>

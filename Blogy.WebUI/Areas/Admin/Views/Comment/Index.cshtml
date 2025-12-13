@@ -1,0 +1,39 @@
+﻿@model List<ResultCommentDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<h1>Yorumlar</h1>
+
+@{
+    int count = 0;
+}
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>#</th>
+        <th>Blog</th>
+        <th>Yorum İçeriği</th>
+        <th>İşlemler</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <th>@count</th>
+            <th>@item.Blog.Title</th>
+            <th>@item.Content</th>          
+           
+            <td>
+
+                <a href="/Admin/Comment/DeleteComment/@item.Id" onclick="return confirm('Bu öğeyi kalıcı olarak silmek istediğinizden emin misiniz?')" class="btn btn-danger">Sil</a>
+               
+
+            </td>
+        </tr>
+    }
+
+</table>
+<a href="/Admin/Comment/CreateComment" class="btn btn-success">Yeni Yorum Oluştur</a>
+
