@@ -1,0 +1,246 @@
+﻿@model CreateAIArticleDto
+@{
+    ViewData["Title"] = "AI Article Generator";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+  
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">
+                    <i class="fas fa-robot me-2"></i>AI Article Generator
+                </h2>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+       
+        <div class="col-lg-5 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-gradient-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-pen-fancy me-2"></i>Makale Oluştur
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Index" method="post" id="articleForm">
+                        <div class="mb-4">
+                            <label for="keyword" class="form-label">
+                                <i class="fas fa-key me-2"></i>Anahtar Kelime
+                            </label>
+                            <input type="text"
+                                   class="form-control form-control-lg"
+                                   id="keyword"
+                                   name="Keyword"
+                                   asp-for="Keyword"
+                                   placeholder="Örn: Yapay Zeka, Teknoloji, Sağlık..."
+                                   required />
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Makale konusunu belirleyin
+                            </div>
+                            <span asp-validation-for="Keyword" class="text-danger"></span>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage as string))
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                @ViewBag.ErrorMessage
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="generateBtn">
+                                <i class="fas fa-wand-magic-sparkles me-2"></i>
+                                <span id="btnText">Makale Oluştur</span>
+                                <span id="btnLoader" class="spinner-border spinner-border-sm ms-2 d-none"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                  
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6 class="mb-2">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>İpuçları
+                        </h6>
+                        <ul class="small mb-0 ps-3">
+                            <li>Spesifik anahtar kelimeler kullanın</li>
+                            <li>Kısa ve öz ifadeler tercih edin</li>
+                            <li>AI, konuya uygun içerik üretecek</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="col-lg-7">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-gradient-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>Oluşturulan Makale
+                    </h5>
+                    @if (!string.IsNullOrEmpty(ViewBag.GeneratedArticle as string))
+                    {
+                        <button class="btn btn-light btn-sm" onclick="copyArticle()">
+                            <i class="fas fa-copy me-1"></i>Kopyala
+                        </button>
+                    }
+                </div>
+                <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                    @if (!string.IsNullOrEmpty(ViewBag.GeneratedArticle as string))
+                    {
+                        <div id="articleContent" class="article-content">
+                            @Html.Raw(ViewBag.GeneratedArticle.Replace("\n", "<br />"))
+                        </div>
+
+                        <hr class="my-4" />
+
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-file-medical fa-4x text-muted mb-3"></i>
+                            <h5 class="text-muted">Henüz makale oluşturulmadı</h5>
+                            <p class="text-muted">Sol taraftaki formu kullanarak AI ile makale oluşturabilirsiniz.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="row mt-4 d-none" id="articleLoadingSection">
+        <div class="col-12 text-center">
+            <div class="article-loading">
+                <div class="spinner-border text-primary me-2" role="status">
+                    <span class="visually-hidden">Yükleniyor...</span>
+                </div>
+                <span class="text-muted">Yükleniyor...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        $(document).ready(function () {
+           
+            $('#articleForm').on('submit', function () {
+                $('#btnText').text('Oluşturuluyor...');
+                $('#btnLoader').removeClass('d-none');
+                $('#generateBtn').prop('disabled', true);
+            });
+
+          
+            @if (!string.IsNullOrEmpty(ViewBag.GeneratedArticle as string))
+            {
+                    <text>
+                    calculateStats();
+                    </text>
+            }
+
+            function calculateStats() {
+                const content = $('#articleContent').text();
+
+               
+                const words = content.trim().split(/\s+/).filter(w => w.length > 0);
+                $('#wordCount').text(words.length);
+
+                
+                $('#charCount').text(content.length);
+
+              
+                const paragraphs = content.split('\n\n').filter(p => p.trim().length > 0);
+                $('#paragraphCount').text(paragraphs.length);
+            }
+        });
+
+       
+        function copyArticle() {
+            const content = $('#articleContent').text();
+            navigator.clipboard.writeText(content).then(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Kopyalandı!',
+                    text: 'Makale panoya kopyalandı.',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true,
+                    position: 'top-end'
+                });
+            }).catch(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata!',
+                    text: 'Kopyalama başarısız oldu.',
+                    confirmButtonText: 'Tamam'
+                });
+            });
+        }
+    </script>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        padding: 1.25rem 1.5rem;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+
+    .article-content {
+        line-height: 1.8;
+        font-size: 1rem;
+        color: #333;
+        text-align: justify;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+
+    .badge {
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+    }
+
+    #generateBtn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+        #generateBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+</style>
