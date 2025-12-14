@@ -1,13 +1,17 @@
-﻿@*_UILayoutFootersAboutPartComponent*@
+﻿@using Blogy.Business.DTOs.FooterAboutDtos
+@model ResultFooterAboutDto
 
-    <div class="widget">
-        <h3 class="mb-4">Hakkımda</h3>
-        <p>
-            Yazılım geliştirme, .NET dünyası, teknoloji ve modern web projeleri üzerine
-            içerikler paylaştığım kişisel bloguma hoş geldin.
-            Burada hem teknik yazılar hem de deneyimlerimi bulabilirsin.
+<div class="widget">
+    <h3 class="mb-4">Hakkımızda</h3>
+
+    @if (Model != null && !string.IsNullOrWhiteSpace(Model.Content))
+    {
+        <p>@Model.Content</p>
+    }
+    else
+    {
+        <p class="text-muted">
+            Hakkımızda bilgisi henüz eklenmedi.
         </p>
-    </div>
-
-
-
+    }
+</div>

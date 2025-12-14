@@ -1,5 +1,8 @@
 using Blogy.Business.Extensions;
+using Blogy.Business.Services.AIServices.ContentService;
+using Blogy.Business.Settings;
 using Blogy.DataAccess.Extensions;
+using Blogy.DataAccess.Repositories.FooterAboutRepositories;
 using Blogy.WebUI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 //IOC CONTAINER
 builder.Services.AddServicesExt();
 builder.Services.AddRepositoriesExt(builder.Configuration);
+
+builder.Services.Configure<OpenAiSettings>(
+    builder.Configuration.GetSection("OpenAI"));
+
+builder.Services.AddHttpClient<IAIContentService, AIContentService>();
+builder.Services.AddScoped<IFooterAboutService, FooterAboutService>();
+
 
 
 builder.Services.AddControllersWithViews(

@@ -1,0 +1,244 @@
+﻿@model ResultFooterAboutDto
+@{
+    ViewData["Title"] = "About Text Yönetimi";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>About Text Yönetimi
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-text-height me-2"></i>Footer About Metni
+                    </h5>
+
+                    <a asp-area="Admin"
+                       asp-controller="FooterAbout"
+                       asp-action="Update"
+                       class="btn btn-light btn-sm">
+                        <i class="fas fa-edit me-1"></i>About Text Düzenle
+                    </a>
+                </div>
+
+
+                <div class="card-body">
+                    @if (Model != null && !string.IsNullOrEmpty(Model.Content))
+                    {
+                        <div class="alert alert-info mb-3">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>Mevcut About Text:</strong>
+                        </div>
+                        <div class="p-3 bg-light rounded border">
+                            <p class="mb-0 text-muted" style="line-height: 1.8;">
+                                @Model.Content
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+                            <p class="text-muted mb-3">Henüz about text eklenmemiş.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <i class="fas fa-edit me-2"></i>About Text Düzenle
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editModalLabel">
+                    <i class="fas fa-edit me-2"></i>About Text Düzenle
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="aboutForm" method="post" asp-action="Update" asp-controller="FooterAbout">
+                <div class="modal-body">
+                    <input type="hidden" name="Id" value="@(Model?.Id ?? 0)" />
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">
+                            <i class="fas fa-align-left me-2"></i>About Text
+                        </label>
+                        <textarea class="form-control"
+                                  id="description"
+                                  name="Content"
+                                  rows="8"
+                                  placeholder="Footer'da gösterilecek about metnini buraya yazın..."
+                                  required>@(Model?.Content ?? "")</textarea>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <button type="button" class="btn btn-outline-secondary" id="btnAiGenerate">
+                                <i class="fas fa-robot me-2"></i>AI ile Oluştur
+                            </button>
+
+                            <small class="text-muted">
+                                <i class="fas fa-magic me-1"></i>
+                                AI öneri üretir, kaydetmez
+                            </small>
+                        </div>
+
+                        <div class="form-text">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Bu metin sitenizin footer bölümünde görüntülenecektir.
+                        </div>
+                    </div>
+
+                  
+                    <div class="alert alert-light d-flex justify-content-between align-items-center mb-0">
+                        <span>
+                            <i class="fas fa-keyboard me-2"></i>Karakter Sayısı:
+                        </span>
+                        <span id="charCount" class="badge bg-primary">0</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>İptal
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function updateCharCount() {
+        const text = $('#description').val();
+        $('#charCount').text(text.length);
+    }
+
+    $(document).ready(function () {
+
+        updateCharCount();
+        $('#description').on('input', updateCharCount);
+
+        $('#btnAiGenerate').on('click', function () {
+            Swal.fire({
+                title: 'AI içerik üretiyor...',
+                text: 'Lütfen bekleyin',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            $.ajax({
+                url: '/Admin/FooterAbout/GenerateWithAiAbout',
+                type: 'POST',
+                data: { topic: 'Personal Software Blog' },
+                success: function (aiText) {
+                    $('#description').val(aiText);
+                    updateCharCount();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'AI İçerik Üretti',
+                        text: 'İçerik düzenlenebilir halde yüklendi.',
+                        timer: 1200,
+                        showConfirmButton: false
+                    });
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: 'AI içerik üretilemedi.'
+                    });
+                }
+            });
+        });
+
+        $('#aboutForm').on('submit', function (e) {
+            e.preventDefault();
+
+            const formData = $(this).serialize();
+            const actionUrl = $(this).attr('action');
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: formData,
+                success: function () {
+                    $('#editModal').modal('hide');
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Başarılı!',
+                        text: 'About text başarıyla güncellendi.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => location.reload());
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata!',
+                        text: 'Güncelleme sırasında bir hata oluştu.'
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+        padding: 1rem 1.5rem;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+        border: none;
+    }
+
+    .modal-header {
+        border-radius: 10px 10px 0 0;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    #charCount {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+</style>

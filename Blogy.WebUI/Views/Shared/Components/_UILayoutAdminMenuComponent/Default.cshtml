@@ -153,23 +153,7 @@
 					<img src="@ViewBag.ProfileImage" alt="@ViewBag.User" />
 					<div class="profile-menu">
 						<a href="#" class="user-name">@ViewBag.User ▼</a>
-						<ul class="dropdown">
-							<li>
-								<a asp-area="" asp-controller="Profile" asp-action="Index">
-									<i class="bi bi-person"></i> Profil Görüntüle
-								</a>
-							</li>
-							<li>
-								<a asp-area="" asp-controller="Profile" asp-action="Edit">
-									<i class="bi bi-pencil"></i> Profili Düzenle
-								</a>
-							</li>
-							<li>
-								<a asp-area="" asp-controller="Profile" asp-action="ChangePassword">
-									<i class="bi bi-key"></i> Şifre Değiştir
-								</a>
-							</li>
-						</ul>
+						
 					</div>
 					<a href="/Login/Logout" class="logout-btn">Çıkış Yap</a>
 				</div>
