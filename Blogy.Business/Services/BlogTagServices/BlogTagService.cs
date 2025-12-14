@@ -19,6 +19,12 @@ public class BlogTagService : IBlogTagService
       
     }
 
+    public async Task AddTagToBlogAsync(int blogId, int tagId)
+    {
+        await _blogTagRepository.AddTagToBlogAsync(blogId, tagId);
+
+    }
+
     public async Task<List<ResultBlogTagDto>> GetAllAsync()
     {
         var blogTags = await _blogTagRepository.GetAllAsync();
@@ -31,4 +37,9 @@ public class BlogTagService : IBlogTagService
         return _mapper.Map<List<ResultTagDto>>(tags);
     }
 
+    public async Task RemoveTagFromBlogAsync(int blogId, int tagId)
+    {
+        await _blogTagRepository.RemoveTagFromBlogAsync(blogId, tagId);
+
+    }
 }

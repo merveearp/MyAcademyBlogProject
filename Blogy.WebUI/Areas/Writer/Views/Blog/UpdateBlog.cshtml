@@ -1,0 +1,153 @@
+﻿@model UpdateBlogDto
+@{
+    ViewData["Title"] = "Blogu Güncelle";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<style>
+    .edit-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+
+    .preview-img {
+        max-height: 220px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 12px;
+    }
+</style>
+
+<form method="post" action="/Writer/Blog/UpdateBlog">
+    <input type="hidden" asp-for="Id" />
+
+    <section class="section">
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+               
+                <div class="col-lg-8">
+
+                    <div class="edit-card">
+
+                        <h2 class="mb-4 fw-bold">Blogu Güncelle</h2>
+
+                       
+                        <div class="mb-3">
+                            <label class="fw-semibold">Blog Başlığı</label>
+                            <input asp-for="Title" class="form-control form-control-lg" />
+                        </div>
+
+                       
+                        <div class="mb-4">
+                            <label class="fw-semibold">Kapak Görseli (Cover)</label>
+                            <input asp-for="CoverImage"
+                                   class="form-control mb-2"
+                                   id="coverImageInput" />
+
+                            <img id="coverImagePreview"
+                                 src="@Model.CoverImage"
+                                 class="preview-img"
+                                 style="@(string.IsNullOrEmpty(Model.CoverImage) ? "display:none;" : "")" />
+                        </div>
+
+                       
+                        <div class="row mb-4">
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Blog Görsel 1</label>
+                                <input asp-for="BlogImage1"
+                                       class="form-control mb-2"
+                                       id="blogImage1Input" />
+
+                                <img id="blogImage1Preview"
+                                     src="@Model.BlogImage1"
+                                     class="preview-img"
+                                     style="@(string.IsNullOrEmpty(Model.BlogImage1) ? "display:none;" : "")" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Blog Görsel 2</label>
+                                <input asp-for="BlogImage2"
+                                       class="form-control mb-2"
+                                       id="blogImage2Input" />
+
+                                <img id="blogImage2Preview"
+                                     src="@Model.BlogImage2"
+                                     class="preview-img"
+                                     style="@(string.IsNullOrEmpty(Model.BlogImage2) ? "display:none;" : "")" />
+                            </div>
+
+                        </div>
+
+                       
+                        <div class="mb-4">
+                            <label class="fw-semibold">Blog İçeriği</label>
+                            <textarea asp-for="Description"
+                                      rows="8"
+                                      class="form-control"></textarea>
+                        </div>
+
+                       
+                        <div class="mb-4">
+                            <label class="fw-semibold">Kategori</label>
+                            <select asp-for="CategoryId"
+                                    asp-items="ViewBag.Categories"
+                                    class="form-select">
+                                <option value="">Kategori Seçiniz</option>
+                            </select>
+                        </div>
+
+                       
+                        <div class="d-flex gap-2">
+                            <button type="submit"
+                                    class="btn btn-primary px-4 rounded-pill">
+                                Kaydet
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary px-4 rounded-pill"
+                                    onclick="window.location.href='/Writer/Blog/Index'">
+                                Vazgeç
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-4 sidebar">
+                    @await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent")
+                    @await Component.InvokeAsync("_DefaultCategoryListComponent")
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</form>
+
+<script>
+    function bindPreview(inputId, imgId) {
+        const input = document.getElementById(inputId);
+        const img = document.getElementById(imgId);
+
+        if (!input || !img) return;
+
+        input.addEventListener("input", function () {
+            const value = this.value.trim();
+            if (value.length > 5) {
+                img.src = value;
+                img.style.display = "block";
+            } else {
+                img.style.display = "none";
+            }
+        });
+    }
+
+    bindPreview("coverImageInput", "coverImagePreview");
+    bindPreview("blogImage1Input", "blogImage1Preview");
+    bindPreview("blogImage2Input", "blogImage2Preview");
+</script>

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Drawing.Printing;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
@@ -49,6 +51,12 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
             await _commentService.CreateAsync(createCommentDto);
             return RedirectToAction(nameof(Index));
     
+        }
+
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            await _commentService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

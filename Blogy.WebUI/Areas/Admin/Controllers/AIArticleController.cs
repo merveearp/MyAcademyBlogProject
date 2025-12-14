@@ -1,6 +1,7 @@
 ﻿using Blogy.Business.DTOs.AIDtos;
 using Blogy.Business.Services.AIServices.ContentService;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {

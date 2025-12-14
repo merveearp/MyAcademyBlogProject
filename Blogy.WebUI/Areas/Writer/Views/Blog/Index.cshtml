@@ -1,0 +1,183 @@
+﻿@model List<ResultBlogDto>
+@{
+    ViewData["Title"] = "Bloglar";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<style>
+    /* 🔴 EN KRİTİK SATIR – GÖRSEL TIKLAMAYI YEMESİN */
+    .card-img-top {
+        pointer-events: none;
+    }
+
+    .blog-title-row {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .blog-title {
+        font-weight: 700;
+        margin: 0;
+        padding-right: 70px;
+    }
+
+    .blog-actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        gap: 6px;
+        z-index: 9999;
+        pointer-events: auto;
+    }
+
+    .blog-action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid #dee2e6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        color: #333;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        transition: all .2s ease;
+    }
+
+        .blog-action-btn.edit:hover {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        .blog-action-btn.delete:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
+</style>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+
+           
+            <div class="col-md-12 col-lg-8">
+
+                @foreach (var blog in Model)
+                {
+                    <div class="card mb-5 shadow-sm border-0 position-relative">
+
+                       
+                        <img src="@(string.IsNullOrEmpty(blog.CoverImage)
+                                                                 ? "/images/default_blog.jpg"
+                                                                 : blog.CoverImage)"
+                             class="card-img-top"
+                             style="height:300px; object-fit:cover;" />
+
+                        <div class="card-body">
+
+                           
+                            <div class="blog-title-row">
+
+                                <h2 class="blog-title">@blog.Title</h2>
+                                <div class="blog-actions">
+
+                                    <button type="button"
+                                            class="blog-action-btn edit"
+                                            title="Düzenle"
+                                            onclick="window.location.href='/Writer/Blog/UpdateBlog/@blog.Id'">
+                                        <i class="dw dw-edit2"></i>
+                                    </button>
+
+                                    <button type="button"
+                                            class="blog-action-btn delete"
+                                            title="Sil"
+                                            onclick="if(confirm('Bu blogu silmek istiyor musunuz?'))
+                         window.location.href='/Writer/Blog/DeleteBlog/@blog.Id'">
+                                        <i class="dw dw-delete-3"></i>
+                                    </button>
+
+                                </div>
+
+
+                            </div>
+
+                           
+                            <div class="text-muted small mb-4 d-flex align-items-center flex-wrap gap-2">
+                                <img src="@(string.IsNullOrEmpty(blog.Writer?.ImageUrl)
+                                                                                 ? "/images/default_user.jpg"
+                                                                                 : blog.Writer.ImageUrl)"
+                                     class="rounded-circle"
+                                     width="30"
+                                     height="30" />
+
+                                <span>@blog.Writer.FullName</span>
+                                <span>•</span>
+                                <span>@blog.CreatedDate.ToString("dd MMM yyyy")</span>
+                                <span>•</span>
+                                <span>@blog.Category.CategoryName</span>
+                                <span>•</span>
+                                <span>
+                                    @(blog.Comments?.Count ?? 0) yorum
+                                </span>
+                            </div>
+
+                 
+                            @if (!string.IsNullOrEmpty(blog.BlogImage1) || !string.IsNullOrEmpty(blog.BlogImage2))
+                            {
+                                <div class="row mb-4">
+                                    @if (!string.IsNullOrEmpty(blog.BlogImage1))
+                                    {
+                                        <div class="col-md-6 mb-3">
+                                            <img src="@blog.BlogImage1"
+                                                 class="img-fluid rounded" />
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(blog.BlogImage2))
+                                    {
+                                        <div class="col-md-6 mb-3">
+                                            <img src="@blog.BlogImage2"
+                                                 class="img-fluid rounded" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                         
+                            <div class="blog-content mb-4">
+                                <p>@blog.Description</p>
+                            </div>
+
+             
+                            @if (blog.BlogTags != null && blog.BlogTags.Any())
+                            {
+                                <div class="mb-3">
+                                    @foreach (var tag in blog.BlogTags)
+                                    {
+                                        <span class="badge bg-light text-dark me-1">
+                                            #@tag.Tag.Name
+                                        </span>
+                                    }
+                                </div>
+                            }
+
+                            <hr />
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+
+            <div class="col-md-12 col-lg-4 sidebar">
+                @await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent")
+                @await Component.InvokeAsync("_DefaultCategoryListComponent")
+            </div>
+
+        </div>
+    </div>
+</section>

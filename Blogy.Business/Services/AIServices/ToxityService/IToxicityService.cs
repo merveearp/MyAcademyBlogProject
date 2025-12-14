@@ -8,6 +8,6 @@ namespace Blogy.Business.Services.AIServices.ToxityService
 {
     public interface IToxicityService
     {
-        Task<double> GetToxicityScoreAsync(string comment);
+        Task<double> GetToxicityScoreAsync(string text);
     }
 }

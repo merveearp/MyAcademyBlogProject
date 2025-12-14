@@ -1,35 +1,82 @@
 ﻿@*
     _AdminHeaderViewComponentPartial
 *@
+<style>
+    .ai-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        color: #6c757d;
+        background-color: #f8f9fa;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+        .ai-pill i {
+            font-size: 16px;
+        }
+
+        .ai-pill:hover {
+            background-color: #e9ecef;
+            color: #495057;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .ai-pill.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+            .ai-pill.active:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+            }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+</style>
 
 <div class="header">
-
-   
     <div class="header-left d-flex align-items-center gap-3">
+        <a asp-area="Admin"
+           asp-controller="About"
+           asp-action="Index"
+           class="ai-pill @(ViewContext.RouteData.Values["controller"]?.ToString() == "About" ? "active" : "")">
+            <i class="icon-copy fa fa-info-circle" aria-hidden="true"></i>
+            <span>Hakkımızda</span>
+        </a>
 
         <a asp-area="Admin"
            asp-controller="FooterAbout"
            asp-action="Index"
-           class="btn btn-light btn-sm d-flex align-items-center gap-2"
-           title="AI About">
-            <i class="dw dw-robot"></i>
-            <span>AI About</span>
+           class="ai-pill @(ViewContext.RouteData.Values["controller"]?.ToString() == "FooterAbout" ? "active" : "")">
+            <i class="icon-copy fa fa-quote-left" aria-hidden="true"></i>
+            <span>Footer Hakkımızda</span>
         </a>
 
         <a asp-area="Admin"
            asp-controller="AIArticle"
            asp-action="Index"
-           class="btn btn-light btn-sm d-flex align-items-center gap-2"
-           title="AI Article">
-            <i class="dw dw-edit2"></i>
-            <span>AI Article</span>
+           class="ai-pill @(ViewContext.RouteData.Values["controller"]?.ToString() == "AIArticle" ? "active" : "")">
+            <i class="icon-copy fa fa-pencil-square-o" aria-hidden="true"></i>
+            <span>AI Makale</span>
         </a>
-
     </div>
 
-  
     <div class="header-right">
-
         <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -45,12 +92,10 @@
                 </div>
             </div>
         </div>
-
         <div class="github-link">
             <a href="https://github.com/dropways/deskapp" target="_blank">
                 <img src="vendors/images/github.svg" alt="">
             </a>
         </div>
-
     </div>
 </div>

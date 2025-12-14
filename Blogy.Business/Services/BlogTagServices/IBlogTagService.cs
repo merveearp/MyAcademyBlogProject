@@ -13,6 +13,8 @@ namespace Blogy.Business.Services.BlogTagServices
     {
         Task<List<ResultTagDto>> GetTagsByBlogIdAsync(int blogId);
         Task<List<ResultBlogTagDto>> GetAllAsync();
-       
+        Task AddTagToBlogAsync(int blogId, int tagId);
+        Task RemoveTagFromBlogAsync(int blogId, int tagId);
+
     }
 }

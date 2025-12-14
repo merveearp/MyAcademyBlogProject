@@ -1,4 +1,5 @@
-﻿using Blogy.Business.Services.BlogServices;
+﻿using Blogy.Business.DTOs.BlogDtos;
+using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.CategoryServices;
 using Blogy.Business.Services.TagServices;
 using Blogy.Entity.Entities;
@@ -7,13 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blogy.WebUI.Areas.Writer.Controllers
 {
     [Area(Roles.Writer)]
     [Authorize(Roles = Roles.Writer)]
-    public class BlogController(IBlogService _blogService,UserManager<AppUser> _userManager ,ICategoryService _categoryService,ITagService _tagService) : Controller
+    public class BlogController(IBlogService _blogService, UserManager<AppUser> _userManager, ICategoryService _categoryService, ITagService _tagService) : Controller
     {
         private async Task GetCategoriesAsync()
         {
@@ -38,13 +40,68 @@ namespace Blogy.WebUI.Areas.Writer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var userBlogs = await _userManager.FindByIdAsync(User.Identity.Name);
-            var blogs = await _blogService.GetAllAsync();
+            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var blogs = await _blogService.GetBlogsByWriterIdAsync(user.Id);
+            return View(blogs);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateBlog()
+        {
+            await GetCategoriesAsync();
+            await GetTagsAsync();
             return View();
         }
 
-        //yenimetot yaz repository service getuserıdblog metodu 
+        [HttpPost]
+        public async Task<IActionResult> CreateBlog(CreateBlogDto createBlogDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                await GetCategoriesAsync();
+                await GetTagsAsync();
+                return View(createBlogDto);
+            }
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            createBlogDto.WriterId = user.Id;
+            await _blogService.CreateAsync(createBlogDto);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateBlog(int id)
+        {
+            await GetCategoriesAsync();
+
+
+            var blog = await _blogService.GetByIdAsync(id);
+            return View(blog);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBlog(UpdateBlogDto updateBlogDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                await GetCategoriesAsync();
+
+                return View(updateBlogDto);
+            }
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            updateBlogDto.WriterId = user.Id;
+            await _blogService.UpdateAsync(updateBlogDto);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            await _blogService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+
+        }
 
 
     }
-}
+    }

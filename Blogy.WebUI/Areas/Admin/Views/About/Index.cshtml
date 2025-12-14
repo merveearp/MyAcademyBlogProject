@@ -1,4 +1,110 @@
-﻿@page
-@model Blogy.WebUI.Areas.Admin.Views.About.IndexModel
+﻿@model ResultAboutDto
 @{
+    ViewData["Title"] = "Hakkımızda";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
 }
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Hakkımızda Sayfası</h3>
+                    <a href="@Url.Action("UpdateAbout", "About", new { id = Model?.Id ?? 0 })" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> @(Model == null || Model.Id == 0 ? "İçerik Oluştur" : "Güncelle")
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (Model == null || Model.Id == 0)
+                    {
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle fa-3x mb-3"></i>
+                            <h4>Henüz Hakkımızda içeriği oluşturulmamış</h4>
+                            <p class="mb-0">Lütfen içerik oluşturmak için yukarıdaki butona tıklayın.</p>
+                        </div>
+                    }
+                    else
+                    {
+                       
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4 class="border-bottom pb-2 mb-3">Ana Bilgiler</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Başlık:</label>
+                                    <p class="text-muted">@Model.AboutTitle</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(Model.TitleImage))
+                                {
+                                    <div class="text-center">
+                                        <label class="form-label fw-bold d-block">Başlık Görseli:</label>
+                                        <img src="@Model.TitleImage" alt="Title" class="img-thumbnail" style="max-height: 150px;" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                       
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4 class="border-bottom pb-2 mb-3">Bölüm 1</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Başlık:</label>
+                                    <p class="text-muted">@Model.Section1Title</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">İçerik:</label>
+                                    <p class="text-muted">@Model.Section1Content</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(Model.Section1Image))
+                                {
+                                    <div class="text-center">
+                                        <label class="form-label fw-bold d-block">Görsel:</label>
+                                        <img src="@Model.Section1Image" alt="Section 1" class="img-thumbnail" style="max-height: 200px;" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <!-- Bölüm 2 -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4 class="border-bottom pb-2 mb-3">Bölüm 2</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Başlık:</label>
+                                    <p class="text-muted">@Model.Section2Title</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">İçerik:</label>
+                                    <p class="text-muted">@Model.Section2Content</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(Model.Section2Image))
+                                {
+                                    <div class="text-center">
+                                        <label class="form-label fw-bold d-block">Görsel:</label>
+                                        <img src="@Model.Section2Image" alt="Section 2" class="img-thumbnail" style="max-height: 200px;" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

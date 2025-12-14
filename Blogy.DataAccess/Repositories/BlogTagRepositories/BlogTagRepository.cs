@@ -37,8 +37,14 @@ namespace Blogy.DataAccess.Repositories.BlogTagRepositories
                 .ToListAsync();
         }
 
+     
         public async Task AddTagToBlogAsync(int blogId, int tagId)
         {
+            var exists = await _context.BlogTags
+                .AnyAsync(x => x.BlogId == blogId && x.TagId == tagId);
+
+            if (exists) return;
+
             var entity = new BlogTag
             {
                 BlogId = blogId,
@@ -49,10 +55,11 @@ namespace Blogy.DataAccess.Repositories.BlogTagRepositories
             await _context.SaveChangesAsync();
         }
 
+
         public async Task RemoveTagFromBlogAsync(int blogId, int tagId)
         {
             var entity = await _context.BlogTags
-                .FirstOrDefaultAsync(x => x.BlogId == blogId && x.TagId == tagId);
+         .FirstOrDefaultAsync(x => x.BlogId == blogId && x.TagId == tagId);
 
             if (entity != null)
             {

@@ -8,6 +8,9 @@ using Blogy.WebUI.Consts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
@@ -27,9 +30,11 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
             return View(tags);
         }
 
-        public async Task<IActionResult> AssignRoleBlogTagAsync(int blogId)
+
+        [HttpGet]
+        public async Task<IActionResult> AssignBlogTag(int blogId)
         {
-            var blog = await _blogService.GetByIdAsync(blogId);
+            
             var allTags = await _tagService.GetAllAsync();
             var blogTags = await _blogTagService.GetTagsByBlogIdAsync(blogId);
 
@@ -49,6 +54,28 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
 
             return View(assignTagList);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignBlogTag(List<AssignTagDto> model)
+        {
+            var blogId = model.First().BlogId;
+
+            foreach (var item in model)
+            {
+                if (item.TagExists)
+                {
+                    await _blogTagService.AddTagToBlogAsync(blogId, item.TagId);
+                }
+                else
+                {
+                    await _blogTagService.RemoveTagFromBlogAsync(blogId, item.TagId);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
 
 
 

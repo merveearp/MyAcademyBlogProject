@@ -15,6 +15,5 @@ namespace Blogy.DataAccess.Repositories.BlogTagRepositories
         Task AddTagToBlogAsync(int blogId, int tagId);
         Task RemoveTagFromBlogAsync(int blogId, int tagId);
 
-
     }
 }

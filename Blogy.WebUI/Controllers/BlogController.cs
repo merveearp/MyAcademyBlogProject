@@ -4,6 +4,8 @@ using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.BlogTagServices;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blogy.WebUI.Controllers
 {
