@@ -1,4 +1,5 @@
 ﻿using Blogy.Business.DTOs.ContactMessageDtos;
+using Blogy.Business.Services.AIServices.ContentService;
 using Blogy.Business.Services.ContactMessageServices;
 using Blogy.Entity.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +14,13 @@ namespace Blogy.WebUI.Controllers
     {
         private readonly IContactMessageService _messageService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IAIContentService _aIContentService;
 
-        public ContactMessageController(IContactMessageService messageService, UserManager<AppUser> userManager)
+        public ContactMessageController(IContactMessageService messageService, UserManager<AppUser> userManager, IAIContentService aIContentService)
         {
             _messageService = messageService;
             _userManager = userManager;
-
+            _aIContentService = aIContentService;
         }
 
         [HttpGet]
@@ -38,7 +40,6 @@ namespace Blogy.WebUI.Controllers
 
 
         [Authorize]
-
         [HttpPost]
         public async Task<IActionResult> CreateMessage(CreateContactMessageDto contactMessageDto)
         {
@@ -47,20 +48,27 @@ namespace Blogy.WebUI.Controllers
                 return View(contactMessageDto);
             }
 
-            var user = await _userManager.GetUserAsync(User); 
-            
+            var user = await _userManager.GetUserAsync(User);
+
             contactMessageDto.WriterId = user.Id;
             contactMessageDto.FullName = $"{user.FirstName} {user.LastName}";
             contactMessageDto.Email = user.Email;
+
             await _messageService.CreateAsync(contactMessageDto);
+       
+            var aiResponse = await _aIContentService
+                .CreateMessageAsync(contactMessageDto.Message);
+
+            TempData["AIResponse"] = aiResponse.Content;
+
             TempData["SuccessMessage"] = "Mesajınız başarıyla gönderildi!";
 
             contactMessageDto.Subject = string.Empty;
             contactMessageDto.Message = string.Empty;
+
             return View();
-
-
         }
+
     }
 }
 

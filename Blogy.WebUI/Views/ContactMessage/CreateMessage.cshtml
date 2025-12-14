@@ -84,6 +84,50 @@
     </div>
 </div>
 
+@if (TempData["AIResponse"] != null)
+{
+    <div class="modal fade" id="aiResponseModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        🤖 AI Asistan Yanıtı
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p style="white-space: pre-line;">
+                        @TempData["AIResponse"]
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const aiModal = document.getElementById('aiResponseModal');
+        if (aiModal) {
+            const modal = new bootstrap.Modal(aiModal);
+            modal.show();
+        }
+    });
+</script>
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
