@@ -1,146 +1,143 @@
-MyAcademyBlogProject (BLOGY)
+🚀 MyAcademyBlogProject (BLOGY)
 
 MyAcademyBlogProject (BLOGY),
 ASP.NET Core .NET 8 kullanılarak geliştirilmiş, N-Katmanlı Mimariye sahip,
-AI destekli, rol bazlı modern bir Blog & Content Management System (CMS) uygulamasıdır.
+AI destekli ve rol bazlı modern bir Blog & Content Management System (CMS) uygulamasıdır.
 
-Bu proje; gerçek hayatta kullanılan mimari yaklaşımlar, yetkilendirme yapıları ve yapay zeka entegrasyonlarını tek bir sistem içerisinde uygulamak amacıyla geliştirilmiştir.
+Bu proje; gerçek hayatta kullanılan mimari yaklaşımlar, yetkilendirme yapıları ve
+yapay zeka entegrasyonlarını tek bir sistem içerisinde uygulamak amacıyla geliştirilmiştir.
 
 🎯 Projenin Amacı
 
-Admin / Writer / User rollerine göre farklı yetkilere sahip bir blog platformu geliştirmek
+🎯 Admin / Writer / User rollerine göre farklı yetkilere sahip bir blog platformu geliştirmek
 
-Clean Code, katmanlı mimari ve sürdürülebilir backend yapısını uygulamak
+🧼 Clean Code ve katmanlı mimari prensiplerini uygulamak
 
-AI destekli içerik üretimi ve moderasyon senaryolarını gerçek projede kullanmak
+🤖 AI destekli içerik üretimi ve moderasyon senaryolarını gerçek projede kullanmak
 
-Backend, full-stack ve mimari yetkinlikleri portföy üzerinden göstermek
+🧠 Backend, full-stack ve mimari yetkinlikleri portföy üzerinden göstermek
 
 🧱 Mimari & Altyapı
 
-ASP.NET Core .NET 8 (MVC)
+⚙️ ASP.NET Core .NET 8 (MVC)
 
-N-Katmanlı Mimari
+🧩 N-Katmanlı Mimari
 
-Entity
+🧱 Entity
 
-DataAccess
+🗄️ DataAccess
 
-Business
+🧠 Business
 
-WebUI
+🖥️ WebUI
 
-Repository Pattern & Service Layer
+📦 Repository Pattern & Service Layer
 
-DTO (Data Transfer Objects)
+🔄 DTO (Data Transfer Objects)
 
-Entity Framework Core (Code First & Migrations)
+🗃️ Entity Framework Core (Code First & Migrations)
 
-FluentValidation ile merkezi doğrulama yapısı
+✅ FluentValidation ile merkezi doğrulama yapısı
 
-Identity ile rol bazlı kimlik doğrulama & yetkilendirme
+🔐 Identity ile rol bazlı kimlik doğrulama & yetkilendirme
 
-SQL Server (konfigüre edilebilir)
+🛢️ SQL Server (konfigüre edilebilir)
 
 👥 Area & Rol Yapısı
-🔹 Admin Area
+🛠️ Admin Area
 
-Yönetim paneli
+📊 Yönetim paneli
 
-Tüm sistem üzerinde tam yetki
+🔑 Tüm sistem üzerinde tam yetki
 
-🔹 Writer Area
+✍️ Writer Area
 
-Blog oluşturma, düzenleme
+📝 Blog oluşturma ve düzenleme
 
-Sadece kendi bloglarını görüntüleme & yönetme
+👁️‍🗨️ Yalnızca kendi bloglarını görüntüleme & yönetme
 
-🔹 User Area
+👤 User Area
 
-Profil yönetimi
+🧑 Profil yönetimi
 
-Kullanıcıya özel menü yapısı
+📂 Kullanıcıya özel menü yapısı
 
-🔹 Guest (rolsüz kullanıcı)
+🌍 Guest (rolsüz kullanıcı)
 
-UI ziyaretine açık
+👀 UI ziyaretine açık
 
-Yorum & mesaj işlemlerinde login yönlendirmesi
+🔐 Yorum & mesaj işlemlerinde login yönlendirmesi
 
 🎛️ Rol Bazlı Menü & Yetkilendirme
 
-Her rol için farklı menü yapısı
+🧭 Her rol için farklı menü yapısı
 
-Rol bazlı sayfa erişim kontrolü
+🚦 Rol bazlı sayfa erişim kontrolü
 
-Güvenli ve yönlendirmeli kullanıcı deneyimi
+🛡️ Güvenli ve yönlendirmeli kullanıcı deneyimi
 
 🤖 AI Entegrasyonları
-🔹 Toxic Comment Detection
+🚨 Toxic Comment Detection
 
-Kötü / uygunsuz yorumların AI ile tespit edilmesi ve engellenmesi
+❌ Kötü / uygunsuz yorumların AI ile tespit edilmesi ve engellenmesi
 
-🔹 AI Content Generation
+✨ AI Content Generation
 
-Blog yazısı üretimi
+📰 Blog yazısı üretimi
 
-🔹 AI About Generation
+🧾 AI About Generation
 
-Footer About alanında dinamik AI içerik kullanımı
+📌 Footer About alanında dinamik AI içerik kullanımı
 
-🔹 AI Auto Message Reply
+💬 AI Auto Message Reply
 
-Kullanıcı mesajlarına otomatik AI yanıtı
+🤖 Kullanıcı mesajlarına otomatik AI yanıtı
 
 ✨ Öne Çıkan Özellikler
 
-Blog, kategori, etiket (Many-to-Many) yönetimi
+🗂️ Blog, kategori, etiket (Many-to-Many) yönetimi
 
-Yorum & mesaj sistemi
+💬 Yorum & mesaj sistemi
 
-Admin / Writer / User panelleri
+🧑‍💻 Admin / Writer / User panelleri
 
-Dinamik sayfa geçişleri
+🔄 Dinamik sayfa geçişleri
 
-Temiz, ölçeklenebilir ve sürdürülebilir mimari
+🧱 Temiz, ölçeklenebilir ve sürdürülebilir mimari
 
-Gerçek hayat senaryolarına uygun iş akışları
+🧪 Gerçek hayat senaryolarına uygun iş akışları
 
 🛠️ Kullanılan Teknolojiler
 
-ASP.NET Core 8.0 MVC
+⚙️ ASP.NET Core 8.0 MVC
 
-C# 11
+🧑‍💻 C# 11
 
-Entity Framework Core
+🗃️ Entity Framework Core
 
-MSSQL
+🛢️ MSSQL
 
-Identity
+🔐 Identity
 
-FluentValidation
+✅ FluentValidation
 
-AutoMapper
+🔄 AutoMapper
 
-Bootstrap 5
+🎨 Bootstrap 5
 
-JavaScript / jQuery
+⚡ JavaScript / jQuery
 
-AI Integration (OpenAI)
+🤖 AI Integration (OpenAI)
 
 🚀 Projeyi Çalıştırma (Local Kurulum)
 git clone https://github.com/merveearp/MyAcademyBlogProject.git
 
 
-MyAcademyBlogProject.sln dosyasını Visual Studio ile açın
-
-appsettings.json içinde SQL Server connection string ayarlayın
-
-Gerekli NuGet paketlerini restore edin
-
-Migration & database işlemlerini çalıştırın
-
-Projeyi build & run edin
+1️⃣ MyAcademyBlogProject.sln dosyasını Visual Studio ile açın
+2️⃣ appsettings.json içinde SQL Server connection string ayarlayın
+3️⃣ Gerekli NuGet paketlerini restore edin
+4️⃣ Migration & database işlemlerini çalıştırın
+5️⃣ Projeyi build & run edin
 
 ![1](https://github.com/user-attachments/assets/dd388129-a88b-47d9-ba6a-c100cb7f634e)
 ![4](https://github.com/user-attachments/assets/1c8d3ffa-4694-4cf5-92ef-aab3330b1723)
