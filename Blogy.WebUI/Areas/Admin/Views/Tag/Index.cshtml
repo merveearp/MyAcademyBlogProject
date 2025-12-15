@@ -2,50 +2,160 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
-
-
-	int count = 0;
+    int count = 0;
 }
 
-<!-- basic table  Start -->
-<div class="pd-20 card-box mb-30">
-	<div class="clearfix mb-20">
-		<div class="pull-left">
-			<h2 class="text-blue h2">Etiketler</h2>
+<div class="pd-20">
+    <!-- Başlık ve Yeni Ekle Butonu -->
+    <div class="card-box mb-30 shadow-sm" style="border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="pd-20">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="text-white mb-2" style="font-weight: 700;">
+                        <i class="icon-copy dw dw-tag mr-2"></i>
+                        Etiket Yönetimi
+                    </h2>
+                    <p class="text-white mb-0" style="opacity: 0.9; font-size: 15px;">
+                        Toplam <strong>@Model.Count</strong> etiket bulunmaktadır
+                    </p>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a href="/Admin/Tag/CreateTag" class="btn btn-light btn-lg shadow-sm" style="border-radius: 8px; font-weight: 600;">
+                        <i class="icon-copy dw dw-add mr-2"></i>
+                        Yeni Etiket Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		</div>
+    <!-- Tablo Kartı -->
+    <div class="card-box mb-30 shadow-sm" style="border-radius: 12px;">
+        <div class="pd-20">
+            <div class="table-responsive">
+                <table class="table table-hover" style="margin-bottom: 0;">
+                    <thead style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                        <tr>
+                            <th style="border: none; padding: 18px; font-weight: 600; color: #333; width: 80px;">
+                                <i class="icon-copy dw dw-list mr-1"></i> #
+                            </th>
+                            <th style="border: none; padding: 18px; font-weight: 600; color: #333;">
+                                <i class="icon-copy dw dw-tag mr-1"></i> Etiket Adı
+                            </th>
+                            <th style="border: none; padding: 18px; font-weight: 600; color: #333; text-align: center; width: 250px;">
+                                <i class="icon-copy dw dw-settings mr-1"></i> İşlemler
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center" style="padding: 60px 20px;">
+                                    <div style="opacity: 0.6;">
+                                        <i class="icon-copy dw dw-warning" style="font-size: 48px; color: #999; margin-bottom: 15px;"></i>
+                                        <h5 style="color: #666;">Henüz etiket eklenmemiş</h5>
+                                        <p style="color: #999;">Yeni etiket eklemek için yukarıdaki butonu kullanın</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr class="table-row-hover" style="transition: all 0.3s ease;">
+                                    <td style="padding: 20px; vertical-align: middle; font-weight: 600; color: #667eea; font-size: 16px;">
+                                        @count
+                                    </td>
+                                    <td style="padding: 20px; vertical-align: middle;">
+                                        <div class="d-flex align-items-center">
+                                            <span class="tag-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 500; font-size: 14px; display: inline-block;">
+                                                <i class="icon-copy dw dw-tag mr-1" style="font-size: 12px;"></i>
+                                                @item.Name
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 20px; vertical-align: middle; text-align: center;">
+                                        <div class="btn-group" role="group">
+                                            <a href="/Admin/Tag/UpdateTag/@item.Id"
+                                               class="btn btn-info btn-sm shadow-sm"
+                                               style="border-radius: 8px 0 0 8px; padding: 10px 20px; font-weight: 500; transition: all 0.3s ease;"
+                                               onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(23, 162, 184, 0.4)';"
+                                               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='';">
+                                                <i class="icon-copy dw dw-edit2 mr-1"></i>
+                                                Güncelle
+                                            </a>
+                                            <a href="/Admin/Tag/DeleteTag/@item.Id"
+                                               class="btn btn-danger btn-sm shadow-sm"
+                                               style="border-radius: 0 8px 8px 0; padding: 10px 20px; font-weight: 500; transition: all 0.3s ease;"
+                                               onclick="return confirm('Bu etiketi silmek istediğinizden emin misiniz?');"
+                                               onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(220, 53, 69, 0.4)';"
+                                               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='';">
+                                                <i class="icon-copy dw dw-delete-3 mr-1"></i>
+                                                Sil
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-	</div>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Etiket Adı</th>
-				<th>İşlemler</th>
-			</tr>
-
-		</thead>
-		<tbody>
-
-
-			@foreach (var item in Model)
-			{
-				count++;
-				<tr>
-					<th>@count</th>
-					<td>@item.Name</td>
-					
-					<td>
-
-						<a href="/Admin/Tag/DeleteTag/@item.Id" class="btn btn-danger">Sil</a>
-						<a href="/Admin/Tag/UpdateTag/@item.Id" class="btn btn-info">Güncelle</a>
-
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
-	<a href="/Admin/Tag/CreateTag" class="btn btn-success">Yeni Etiket Oluştur</a>
-
+       
+        @if (Model.Count > 0)
+        {
+            <div class="pd-20" style="background: #f8f9fa; border-top: 1px solid #e9ecef; border-radius: 0 0 12px 12px;">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0" style="color: #666; font-size: 14px;">
+                            <i class="icon-copy dw dw-checked mr-2" style="color: #43a047;"></i>
+                            <strong>@Model.Count</strong> etiket gösteriliyor
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="/Admin/Tag/CreateTag" class="btn btn-primary btn-sm" style="border-radius: 8px; padding: 8px 20px; font-weight: 500;">
+                            <i class="icon-copy dw dw-add mr-1"></i>
+                            Yeni Ekle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
-<!-- basic table  End -->
+
+<style>
+    .table-row-hover:hover {
+        background-color: #f8f9fa !important;
+        transform: scale(1.01);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .tag-badge {
+        transition: all 0.3s ease;
+    }
+
+    .table-row-hover:hover .tag-badge {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-group .btn {
+        border: none;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    }
+
+    thead tr th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+</style>

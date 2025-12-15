@@ -20,13 +20,25 @@ namespace Blogy.DataAccess.Repositories.ContactInfoRepositories
 
         public async Task<ContactInfo> GetAsync()
         {
-            return await _context.ContactInfos.FirstOrDefaultAsync();
+            return await _context.ContactInfos
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
         }
 
         public async Task UpdateAsync(ContactInfo entity)
         {
-            _context.Update(entity);
+            var existing = await _context.ContactInfos.FirstOrDefaultAsync();
+
+            if (existing == null)
+                return;
+
+            existing.Location = entity.Location;
+            existing.OpenHours = entity.OpenHours;
+            existing.Email = entity.Email;
+            existing.Phone = entity.Phone;
+
             await _context.SaveChangesAsync();
         }
+
     }
 }

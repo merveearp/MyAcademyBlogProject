@@ -102,6 +102,21 @@ namespace Blogy.WebUI.Areas.Writer.Controllers
 
         }
 
+        public async Task<IActionResult> GetBlogsByCategory(int categoryId)
+        {
+
+            var blogs = await _blogService.GetBlogsByCategoryIdAsync(categoryId);
+
+            return View(blogs);
+        }
+        public async Task<IActionResult> BlogDetails(int id)
+        {
+            var blog = await _blogService.GetSingleByIdAsync(id);
+            return View(blog);
+        }
+
+
+
 
     }
-    }
+}

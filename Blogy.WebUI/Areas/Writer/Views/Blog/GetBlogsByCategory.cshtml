@@ -1,0 +1,64 @@
+﻿@model List<ResultBlogDto>
+@{
+	ViewData["Title"] = "GetBlogsByCategory";
+	Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="section search-result-wrap">
+	<div class="container">
+		<div class="row mb-4">
+			<div class="col-12">
+				<h2 class="h3 fw-bold">
+					Kategori:
+					<span class="text-primary">
+						@(Model.FirstOrDefault() != null
+												? Model.FirstOrDefault().Category?.CategoryName
+												: "Bu kategoriye ait blog bulunamadı")
+					</span>
+				</h2>
+			</div>
+		</div>
+		<div class="row posts-entry">
+			<div class="col-lg-8">
+				@foreach (var item in Model)
+				{
+					<div class="blog-entry d-flex blog-entry-search-item">
+						<a href="#" class="img-link me-4">
+							<img src="@item.CoverImage" alt="Image" class="img-fluid">
+						</a>
+						<div>
+							<span class="date">@item.CreatedDate &bullet; <a href="#"> @item.Category.CategoryName</a></span>
+							<p>@(item.Description.Length < 100 ? item.Description : item.Description.Substring(0, 100) + "...")</p>
+							<p><a asp-area="" asp-controller="Blog" asp-action="BlogDetails" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Devamını Oku</a></p>
+						</div>
+						@if (item.BlogTags != null)
+						{
+							@foreach (var t in item.BlogTags)
+							{
+								<a href="#" class="badge bg-light text-dark me-1">
+									@t.Tag.Name
+								</a>
+							}
+						}
+
+					</div>
+				}
+
+			</div>
+
+			<div class="col-lg-4 sidebar">
+
+
+
+				<!-- END sidebar-box -->
+				@await Component.InvokeAsync("_BlogsByCategoryLatestBlogComponent")
+
+				<!-- END sidebar-box -->
+				@await Component.InvokeAsync("_DefaultCategoryListComponent")
+
+
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -5,20 +5,16 @@
         public Task<bool> DecisionAsync(double score)
         {
             // OpenAI Moderation mapping:
-            // 0.0 = clean (yayınlanabilir)
-            // 1.0 = toxic (engellenecek)
+            // 0.0  => clean (yayınlanabilir)
+            // >=1.0 => toxic (engellenecek)
 
-            var isAllowed = score == 0.0;
-            return Task.FromResult(isAllowed);
+            if (score <= 0.0)
+                return Task.FromResult(true);
+
+            return Task.FromResult(false);
         }
-
-
     }
 }
-
-
-
-
 
 
 //private const double TOXICITY_THRESHOLD = 0.7;

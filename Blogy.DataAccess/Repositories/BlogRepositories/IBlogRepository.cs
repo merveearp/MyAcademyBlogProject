@@ -15,6 +15,8 @@ namespace Blogy.DataAccess.Repositories.BlogRepositories
         Task<List<Blog>> GetBlogsByCategoryIdAsync(int categoryId);
         Task<List<Blog>> GetLast3BlogsAsync();
         Task<List<Blog>> GetBlogsByWriterIdAsync(int writerId);
+        Task<List<Blog>> GetAllWithTagsAsync();
+
     }
 }
  

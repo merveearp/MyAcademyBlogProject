@@ -9,5 +9,6 @@ namespace Blogy.Business.Services.AIServices.LanguageService
     public interface IAILanguageService
     {
         Task<string> TranslateAsync(string comment);
+        bool HasTurkishCharacters(string text);
     }
 }

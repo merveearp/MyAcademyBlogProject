@@ -31,8 +31,14 @@ namespace Blogy.Business.Services.ContactInfoServices
 
         public async Task UpdateAsync(UpdateContactInfoDto updateDto)
         {
-            var value = _mapper.Map<ContactInfo>(updateDto);
-            await _contactInfoRespository.UpdateAsync(value);
+            var existing = await _contactInfoRespository.GetAsync();
+
+            if (existing == null)
+                return;
+
+            _mapper.Map(updateDto, existing);
+            await _contactInfoRespository.UpdateAsync(existing);
         }
+
     }
 }

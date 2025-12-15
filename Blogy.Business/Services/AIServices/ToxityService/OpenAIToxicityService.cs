@@ -26,6 +26,9 @@ public class OpenAIToxicityService : IToxicityService
 
     public async Task<double> GetToxicityScoreAsync(string text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+            return 0.0; 
+
         var requestBody = new
         {
             model = "omni-moderation-latest",
@@ -46,9 +49,11 @@ public class OpenAIToxicityService : IToxicityService
         var result = document.RootElement
             .GetProperty("results")[0];
 
-        bool flagged = result.GetProperty("flagged").GetBoolean();
+        bool flagged =
+            result.GetProperty("flagged").GetBoolean();
 
-        var categories = result.GetProperty("categories");
+        var categories =
+            result.GetProperty("categories");
 
         bool harassment =
             categories.GetProperty("harassment").GetBoolean();
@@ -59,11 +64,10 @@ public class OpenAIToxicityService : IToxicityService
         bool hate =
             categories.GetProperty("hate").GetBoolean();
 
-       
-        if (flagged && (harassment || harassmentThreat || hate))
-            return 1.0; 
 
-        return 0.0; // CLEAN
+        if (harassment || harassmentThreat || hate)
+            return 1.0;
+
+        return flagged ? 1.0 : 0.0;
     }
-
 }

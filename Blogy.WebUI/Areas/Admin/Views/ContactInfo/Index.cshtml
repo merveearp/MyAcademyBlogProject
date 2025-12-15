@@ -1,11 +1,11 @@
-﻿@model List<ResultContactInfoDto>
+﻿@model ResultContactInfoDto
 @{
     ViewData["Title"] = "İletişim Bilgileri Yönetimi";
     Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
 }
 
 <div class="container-fluid">
-    <!-- Sayfa Başlığı -->
+   
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <!-- İletişim Bilgileri Tablosu -->
+    
     <div class="row">
         <div class="col-12">
             <div class="card shadow-sm">
@@ -41,38 +41,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Model != null && Model.Any())
-                                {
-                                    @foreach (var item in Model)
-                                    {
+                            
+                                  
                                         <tr>
-                                            <td class="px-4 fw-bold text-muted">@item.Id</td>
+                                            <td class="px-4 fw-bold text-muted">@Model.Id</td>
                                             <td>
                                                 <i class="fas fa-map-marker-alt text-danger me-2"></i>
-                                                <span class="text-truncate d-inline-block" style="max-width: 200px;" title="@item.Location">
-                                                    @item.Location
+                                        <span class="text-truncate d-inline-block" style="max-width: 200px;" title="@Model.Location">
+                                            @Model.Location
                                                 </span>
                                             </td>
                                             <td>
                                                 <i class="fas fa-clock text-primary me-2"></i>
-                                                @item.OpenHours
+                                        @Model.OpenHours
                                             </td>
                                             <td>
                                                 <i class="fas fa-envelope text-info me-2"></i>
-                                                <a href="mailto:@item.Email" class="text-decoration-none">@item.Email</a>
+                                        <a href="mailto:@Model.Email" class="text-decoration-none">@Model.Email</a>
                                             </td>
                                             <td>
                                                 <i class="fas fa-phone text-success me-2"></i>
-                                                <a href="tel:@item.Phone" class="text-decoration-none">@item.Phone</a>
+                                        <a href="tel:@Model.Phone" class="text-decoration-none">@Model.Phone</a>
                                             </td>
                                             <td>
                                                 <small class="text-muted">
-                                                    @item.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                                            @Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")
                                                 </small>
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">
-                                                    <a asp-action="Update" asp-route-id="@item.Id"
+                                            <a  asp-area="Admin" asp-controller="ContactInfo" asp-action="Update" asp-route-id="@Model.Id"
                                                        class="btn btn-sm btn-outline-primary"
                                                        title="Düzenle">
                                                         <i class="fas fa-edit"></i>
@@ -81,29 +79,14 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="7" class="text-center py-5">
-                                            <i class="fas fa-inbox fa-3x text-muted mb-3 d-block"></i>
-                                            <p class="text-muted mb-0">Henüz kayıt bulunmamaktadır.</p>
-                                        </td>
-                                    </tr>
-                                }
+                                    
+                                
+                               
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if (Model != null && Model.Any())
-                {
-                    <div class="card-footer bg-white py-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Toplam <strong>@Model.Count</strong> kayıt</span>
-                        </div>
-                    </div>
-                }
+                
             </div>
         </div>
     </div>
@@ -191,4 +174,4 @@
         }
     }
 
-</styl
+</style>

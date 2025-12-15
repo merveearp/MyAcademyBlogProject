@@ -37,9 +37,11 @@ namespace Blogy.Business.Services.BlogServices
 
         public async Task<List<ResultBlogDto>> GetAllAsync()
         {
-            var values = await _blogRepository.GetAllAsync();
+            var values = await _blogRepository.GetAllWithTagsAsync();
             return _mapper.Map<List<ResultBlogDto>>(values);
         }
+
+
 
         public async Task<List<ResultBlogDto>> GetBlogsByCategoryIdAsync(int categoryId)
         {

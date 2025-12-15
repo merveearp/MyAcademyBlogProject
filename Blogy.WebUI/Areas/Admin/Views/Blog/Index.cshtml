@@ -36,7 +36,7 @@
                                         <th>Başlık</th>
                                         <th>Açıklama</th>
                                         <th>Kategori</th>
-                                        <th>Etiketler</th>
+                                       @*  <th>Etiketler</th> *@
                                         <th width="180" class="text-center">İşlemler</th>
                                     </tr>
                                 </thead>
@@ -59,7 +59,7 @@
 
                                             <td>
                                                 <div class="blog-title-cell">
-                                                    <h6 class="blog-title mb-1">@item.Title</h6>
+                                                   
                                                     <p class="blog-desc mb-0">
                                                         @(item.Description.Length > 80
                                                             ? item.Description.Substring(0, 80) + "..."
@@ -73,7 +73,7 @@
                                                     @item.Category.CategoryName
                                                 </span>
                                             </td>
-                                            <td>
+                                           @*  <td>
                                                 <div class="tags-cell">
                                                     @if (item.BlogTags != null && item.BlogTags.Any())
                                                     {
@@ -97,7 +97,7 @@
                                                         <span class="text-muted small">Etiket yok</span>
                                                     }
                                                 </div>
-                                            </td>
+                                            </td> *@
                                             <td>
                                                 <div class="action-buttons">
                                                     <a href="/Admin/Blog/UpdateBlog/@item.Id"

@@ -1,20 +1,56 @@
 ﻿@model List<ResultSocialDto>
 
 
-    <div class="widget">
-        <h3>Sosyal Medya</h3>
-        <ul class="list-unstyled social">
+    <style>
 
+    .social-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 12px;
+    }
+
+        .social-links li {
+            display: inline-block;
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+            .social-links a:hover {
+                background-color: #0d6efd;
+                transform: translateY(-3px);
+            }
+
+    </style>
+<div class="widget">
+    <h3 class="mb-3">Sosyal Medya</h3>
+
+    @if (Model != null && Model.Any())
+    {
+        <ul class="social-links">
             @foreach (var social in Model)
             {
-                <li class="d-flex align-items-center mb-2">
-                    <a href="@social.Url" target="_blank" class="d-flex align-items-center gap-2">
-                        <span class="@social.Icon" style="font-size:18px;"></span>
-                        <span>@social.Name</span>
+                <li>
+                    <a href="@social.Url"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       title="@social.Name">
+                        <i class="@social.Icon"></i>
                     </a>
                 </li>
             }
-
         </ul>
-    </div>
-
+    }
+</div>
