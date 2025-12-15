@@ -129,12 +129,15 @@
                     <ul class="tags">
                         @foreach (var tag in Model.BlogTags)
                         {
-                            <li><a href="#">@tag.Tag.Name</a></li>
-
+                            <li>
+                                <a href="#">
+                                    @(tag.Tag?.Name ?? "Etiket Yok")
+                                </a>
+                            </li>
                         }
-
                     </ul>
                 </div>
+
 
             </div>
             <!-- END sidebar -->

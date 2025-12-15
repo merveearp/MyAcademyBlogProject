@@ -1,16 +1,16 @@
 ﻿@model List<ResultBlogTagDto>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Blog - Tag Listesi";
     Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
 }
-
-
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Bloglar</th>
+            <th>Blog</th>
             <th>Tagler</th>
+            <th>İşlemler</th>
         </tr>
     </thead>
     <tbody>
@@ -24,8 +24,16 @@
                         <span class="badge badge-info mr-1">@bt.Tag.Name</span>
                     }
                 </td>
+                <td>
+                    <a asp-area="Admin"
+                       asp-controller="BlogTag"
+                       asp-action="AssignBlogTag"
+                       asp-route-blogId="@group.Key.Id"
+                       class="btn btn-sm btn-primary">
+                        Tag Ata
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-

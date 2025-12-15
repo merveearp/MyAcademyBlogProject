@@ -20,14 +20,23 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
                 return View(footerAbout);
             }
 
-            [HttpGet]
-            public async Task<IActionResult> Update()
-            {
-                var footerAbout = await _footerAboutService.GetAsync();
-                return View(footerAbout);
-            }
+        [HttpGet]
+        public async Task<IActionResult> Update()
+        {
+            var resultDto = await _footerAboutService.GetAsync();
 
-            [HttpPost]
+            var updateDto = new UpdateFooterAboutDto
+            {
+                Id = resultDto.Id,
+                Content = resultDto.Content
+
+            };
+
+            return View(updateDto); 
+        }
+
+
+        [HttpPost]
             public async Task<IActionResult> Update(UpdateFooterAboutDto dto)
             {
                 await _footerAboutService.UpdateAsync(dto);

@@ -11,16 +11,23 @@ using System.Threading.Tasks;
 
 namespace Blogy.Business.Mappings
 {
-    public class BlogTagMappings :Profile
+    public class BlogTagMappings : Profile
     {
         public BlogTagMappings()
         {
             CreateMap<BlogTag, ResultBlogTagDto>()
-             .ForMember(dest => dest.Blog, opt => opt.MapFrom(src => src.Blog))
-             .ForMember(dest => dest.Tag, opt => opt.MapFrom(src => src.Tag));
+                .ForMember(d => d.Blog,
+                    o => o.MapFrom(s => s.Blog == null ? null : s.Blog))
+                .ForMember(d => d.Tag,
+                    o => o.MapFrom(s => s.Tag == null ? null : s.Tag));
 
-            CreateMap<Blog, ResultBlogDto>();
-            CreateMap<Tag, ResultTagDto>();
+
+            CreateMap<Blog, ResultBlogDto>()
+                .ForMember(d => d.BlogTags, o => o.Ignore()); 
+
+            CreateMap<Tag, ResultTagDto>()
+                .ForMember(d => d.BlogTags, o => o.Ignore()); 
         }
     }
+
 }

@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
+
+    [Area("Admin")]
+    [Authorize(Roles = $"{Roles.Admin}")]
     public class BlogTagController(IBlogTagService _blogTagService,IBlogService _blogService,ITagService _tagService) : Controller
     {
-        [Area("Admin")]
-        [Authorize(Roles = $"{Roles.Admin}")]
 
         public async Task<IActionResult> Index()
         {
@@ -59,14 +60,19 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> AssignBlogTag(List<AssignTagDto> model)
         {
             var blogId = model.First().BlogId;
+            var existingTags = await _blogTagService.GetTagsByBlogIdAsync(blogId);
 
             foreach (var item in model)
             {
-                if (item.TagExists)
+                bool existsInDb = existingTags.Any(x => x.Id == item.TagId);
+
+               
+                if (item.TagExists && !existsInDb)
                 {
                     await _blogTagService.AddTagToBlogAsync(blogId, item.TagId);
                 }
-                else
+
+                if (!item.TagExists && existsInDb)
                 {
                     await _blogTagService.RemoveTagFromBlogAsync(blogId, item.TagId);
                 }
@@ -74,9 +80,6 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-
 
 
     }

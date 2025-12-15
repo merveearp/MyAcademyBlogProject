@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace Blogy.Business.DTOs.BlogTagDtos
 {
-    public class ResultBlogTagDto :BaseDto
+    public class ResultBlogTagDto : BaseDto
     {
         public int BlogId { get; set; }
-        public virtual ResultBlogDto Blog { get; set; }
+        public virtual ResultBlogDto Blog { get; set; }   
 
         public int TagId { get; set; }
-        public virtual ResultTagDto Tag { get; set; }
+        public virtual ResultTagDto Tag { get; set; }     
+}
 
-    }
+
 }
